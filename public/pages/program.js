@@ -6,7 +6,7 @@ $(function () {
     $("#my-table").DataTable({
         processing: true,
         serverSide: true,
-        ajax: penyiarIndexUrl,
+        ajax: programIndexUrl,
         columns: [
             {
                 data: "DT_RowIndex",
@@ -15,12 +15,12 @@ $(function () {
                 searchable: false,
             },
             {
-                data: "id_penyiar",
-                name: "id_penyiar",
+                data: "id_program",
+                name: "id_program",
             },
             {
-                data: "nama_penyiar",
-                name: "nama_penyiar",
+                data: "nama_program",
+                name: "nama_program",
             },
             {
                 data: "action",
@@ -49,7 +49,7 @@ $(function () {
     });
 });
 
-function penyiarBerhasil(message) {
+function programBerhasil(message) {
     if (message) {
         Swal.fire({
             position: "center",
@@ -61,7 +61,7 @@ function penyiarBerhasil(message) {
     }
 }
 
-window.deletePenyiar = function (id) {
+window.deleteProgram = function (id) {
     Swal.fire({
         text: "Apakah kamu yakin?",
         icon: "warning",

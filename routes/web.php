@@ -3,6 +3,8 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\IklanController;
 use App\Http\Controllers\PenyiarController;
+use App\Http\Controllers\TrafficController;
+use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('client', ClientController::class);
     Route::resource('iklan', IklanController::class);
     Route::resource('penyiar', PenyiarController::class);
+    Route::resource('traffic', TrafficController::class);
+    Route::resource('program', ProgramController::class);
 });
 
 require __DIR__ . '/auth.php';

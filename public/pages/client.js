@@ -3,7 +3,7 @@ $(document).ready(function () {
 });
 
 $(function () {
-    $("#client-table").DataTable({
+    $("#my-table").DataTable({
         processing: true,
         serverSide: true,
         ajax: clientIndexUrl,
@@ -44,6 +44,7 @@ $(function () {
             searchPlaceholder: "Cari data...",
             lengthMenu: "Menampilkan _MENU_ data",
             info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            emptyTable: "Tidak ada data",
         },
     });
 });

@@ -1,12 +1,12 @@
 <x-sidebar-navbar-layout>
     <div class="text-gray-600 mb-6 flex justify-between items-end">
         <div class="">
-            <p class="font-bold text-4xl mb-4">Client</p>
-            <p class="text-sm">Data Client</p>
+            <p class="font-bold text-4xl mb-4">Program</p>
+            <p class="text-sm">Data Program</p>
         </div>
-        <button onclick="window.location='{{ route('client.create') }}'"
+        <button onclick="window.location='{{ route('program.create') }}'"
             class="hover:bg-blue-100 transition-all transition-duration-300 text-blue-500 font-bold py-1 px-3 rounded-md"><i
-                class="fa-solid fa-plus"></i><span class="ml-1 font-bold">Tambah Client</span>
+                class="fa-solid fa-plus"></i><span class="ml-1 font-bold">Tambah Program</span>
         </button>
     </div>
     <div class="p-3 bg-gray-50 rounded-md shadow-md">
@@ -15,8 +15,8 @@
             <thead class=" rounded-t-lg text-gray-200">
                 <tr>
                     <th>No</th>
-                    <th>ID Client</th>
-                    <th>Nama Client</th>
+                    <th>ID Program</th>
+                    <th>Nama Program</th>
                     <th class="text-center">Aksi</th>
                 </tr>
             </thead>
@@ -24,13 +24,13 @@
     </div>
     @include('partials.cdn')
     <script>
-        const clientIndexUrl = "{{ route('client.index') }}";
+        const programIndexUrl = "{{ route('program.index') }}";
     </script>
-    <script src="{{ asset('pages/client.js') }}"></script>
-    @if (session('client_berhasil'))
+    <script src="{{ asset('pages/program.js') }}"></script>
+    @if (session('program_berhasil'))
         <script>
-            const clientMessage = {!! json_encode(session('client_berhasil')) !!};
-            clientBerhasil(clientMessage);
+            const programMessage = {!! json_encode(session('program_berhasil')) !!};
+            programBerhasil(programMessage);
         </script>
     @endif
 </x-sidebar-navbar-layout>

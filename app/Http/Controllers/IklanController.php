@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 
+
 class IklanController extends Controller
 {
     /**
@@ -27,6 +28,9 @@ class IklanController extends Controller
                 })
                 ->editColumn('id_client', function ($row) {
                     return $row->client->nama_client;
+                })
+                ->editColumn('periode_siar', function ($row) {
+                    return formatTanggal($row->periode_siar_mulai) . ' - ' . formatTanggal($row->periode_siar_selesai);
                 })
                 ->addColumn('action', function ($row) {
                     $editBtn = '<a href="' . route('iklan.edit', $row->id_iklan) . '" class="text-yellow-500 px-2 py-1 rounded-md transition-all transition-duration-300 hover:bg-yellow-100 hover:shadow-sm"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
@@ -65,14 +69,16 @@ class IklanController extends Controller
             'id_client' => 'required',
             'nama_iklan' => 'required|string',
             'jumlah_putar' => 'required|integer',
-            'periode_siar' => 'required|integer',
+            'periode_siar_mulai' => 'required|date',
+            'periode_siar_selesai' => 'required|date',
         ]);
 
         $simpan = Iklan::create([
             'id_client' => $request->id_client,
             'nama_iklan' => $request->nama_iklan,
             'jumlah_putar' => $request->jumlah_putar,
-            'periode_siar' => $request->periode_siar,
+            'periode_siar_mulai' => $request->periode_siar_mulai,
+            'periode_siar_selesai' => $request->periode_siar_selesai,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

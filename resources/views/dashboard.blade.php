@@ -1,6 +1,6 @@
 <x-sidebar-navbar-layout>
     <div id="header">
-        <p class="text-3xl text-gray-600 font-bold">Client</p>
+        <p class="text-3xl text-gray-600 font-bold">Dashboard</p>
     </div>
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg ">
         <div class="grid grid-cols-3 gap-4 mb-4">

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('iklan', function (Blueprint $table) {
             $table->bigIncrements('id_iklan');
-            $table->unsignedBigInteger('id_client'); // Foreign key
+            $table->unsignedBigInteger('id_client'); 
             $table->string('nama_iklan');
             $table->integer('jumlah_putar');
-            $table->string('periode_siar');
+            $table->date('periode_siar_mulai');
+            $table->date('periode_siar_selesai');
             $table->timestamps();
 
             // fk ke tabel client

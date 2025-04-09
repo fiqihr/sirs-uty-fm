@@ -6,7 +6,7 @@ $(function () {
     $("#my-table").DataTable({
         processing: true,
         serverSide: true,
-        ajax: penyiarIndexUrl,
+        ajax: trafficIndexUrl,
         columns: [
             {
                 data: "DT_RowIndex",
@@ -15,12 +15,12 @@ $(function () {
                 searchable: false,
             },
             {
-                data: "id_penyiar",
-                name: "id_penyiar",
+                data: "id_traffic",
+                name: "id_traffic",
             },
             {
-                data: "nama_penyiar",
-                name: "nama_penyiar",
+                data: "nama_traffic",
+                name: "nama_traffic",
             },
             {
                 data: "action",
@@ -49,7 +49,7 @@ $(function () {
     });
 });
 
-function penyiarBerhasil(message) {
+function trafficBerhasil(message) {
     if (message) {
         Swal.fire({
             position: "center",
@@ -61,7 +61,7 @@ function penyiarBerhasil(message) {
     }
 }
 
-window.deletePenyiar = function (id) {
+window.deleteTraffic = function (id) {
     Swal.fire({
         text: "Apakah kamu yakin?",
         icon: "warning",
