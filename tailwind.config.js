@@ -9,8 +9,8 @@ export default {
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.js",
     ],
-
     theme: {
+        darkMode: false,
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
@@ -19,7 +19,7 @@ export default {
             },
             colors: {
                 primary: "#DAD2FF",
-                secondary: "#9852F9"
+                secondary: "#9852F9",
             },
         },
 

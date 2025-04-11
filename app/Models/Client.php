@@ -11,4 +11,9 @@ class Client extends Model
     protected $table = 'client';
     protected $primaryKey = 'id_client';
     protected $guarded = [];
+
+    public function iklan()
+    {
+        return $this->hasMany(Iklan::class, 'id_client', 'id_client');
+    }
 }

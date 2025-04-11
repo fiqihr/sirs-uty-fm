@@ -117,3 +117,9 @@
     background-color: #dbeafe !important;
     border-radius: 0.375rem !important;
 }
+
+/* Tambahkan ke file CSS kamu */
+button[data-accordion-target] {
+    background-color: #dad2ff !important; /* Tailwind gray-200 */
+    color: #9852f9 !important; /* Tailwind gray-500 */
+}

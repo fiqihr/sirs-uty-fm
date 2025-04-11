@@ -9,13 +9,13 @@
                     <div class="mb-5">
                         <label for="email" class="block mb-2 text-sm font-bold text-gray-900">Email</label>
                         <input type="email" name="email" id="email"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5"
+                            class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
                             placeholder="youremail@mail.com" required />
                     </div>
                     <div class="mb-5">
                         <label for="password" class="block mb-2 text-sm font-bold text-gray-900 te">Password</label>
                         <input type="password" name="password" id="password"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-lime-500 focus:border-lime-500 block w-full p-2.5"
+                            class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
                             placeholder="your password" required />
                     </div>
                     <button type="submit"

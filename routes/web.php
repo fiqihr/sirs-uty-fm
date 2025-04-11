@@ -6,6 +6,9 @@ use App\Http\Controllers\PenyiarController;
 use App\Http\Controllers\TrafficController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Client;
+use App\Models\Iklan;
+use App\Models\Program;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -13,21 +16,51 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', function () {
-    return view('dashboard');
+    $jumlahClient = Client::count();
+    $jumlahIklan = Iklan::count();
+    $jumlahProgram = Program::count();
+    return view('dashboard', compact('jumlahClient', 'jumlahIklan', 'jumlahProgram'));
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::middleware(['auth', 'check.access:admin'])->group(function () {
+//     Route::resource('client', ClientController::class);
+//     Route::resource('program', ProgramController::class);
+// });
+
+Route::middleware(['auth', 'check.access:admin,traffic'])->group(function () {
+    Route::resource('traffic', TrafficController::class);
+    Route::resource('client', ClientController::class);
+    Route::resource('iklan', IklanController::class);
+    
+    // iklan json
+    Route::get('/iklan/json', [IklanController::class, 'getIklanJson'])->name('iklan.json');
+
+    // rancangan siar
+    Route::get('/rs', function () {
+        return view('rs.index');
+    })->name('rs.index');
+    Route::get('/rs/create', function () {
+        $iklan = Iklan::all();
+        return view('rs.create', compact('iklan'));
+    })->name('rs.create');
+});
+
+Route::middleware(['auth', 'check.access:admin,penyiar'])->group(function () {
+    // rancangan siar
+});
+
+Route::middleware(['auth', 'check.access:admin,program_director'])->group(function () {
+    Route::resource('penyiar', PenyiarController::class);
+    Route::resource('program', ProgramController::class);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/dashboard2', function () {
-        return view('dashboard2');
-    })->name('dashboard2');
-    Route::resource('client', ClientController::class);
-    Route::resource('iklan', IklanController::class);
-    Route::resource('penyiar', PenyiarController::class);
-    Route::resource('traffic', TrafficController::class);
-    Route::resource('program', ProgramController::class);
+    // Route::get('/dashboard2', function () {
+    //     return view('dashboard2');
+    // })->name('dashboard2');
 });
 
 require __DIR__ . '/auth.php';

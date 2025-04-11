@@ -32,13 +32,15 @@
             </div>
             <div class="flex gap-2 mb-5">
                 <div class="w-1/2">
-                    <label for="periode_siar_mulai" class="block mb-2 text-sm font-medium text-gray-600 ">Mulai Periode Siar</label>
+                    <label for="periode_siar_mulai" class="block mb-2 text-sm font-medium text-gray-600 ">Mulai Periode
+                        Siar</label>
                     <input type="date" id="periode_siar_mulai" name="periode_siar_mulai"
                         class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
                         required />
                 </div>
                 <div class="w-1/2">
-                    <label for="periode_siar_selesai" class="block mb-2 text-sm font-medium text-gray-600 ">Selesai Periode Siar</label>
+                    <label for="periode_siar_selesai" class="block mb-2 text-sm font-medium text-gray-600 ">Selesai
+                        Periode Siar</label>
                     <input type="date" id="periode_siar_selesai" name="periode_siar_selesai"
                         class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
                         required />

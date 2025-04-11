@@ -150,4 +150,11 @@ class IklanController extends Controller
             return redirect()->back();
         }
     }
+
+    function getIklanJson()
+    {
+        dd('cek');
+        // $iklan = Iklan::all();
+        // return response()->json($iklan);
+    }
 }

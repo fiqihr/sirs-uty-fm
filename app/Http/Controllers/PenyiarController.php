@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penyiar;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -14,20 +15,22 @@ class PenyiarController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return DataTables::of(Penyiar::query()->orderBy('id_penyiar', 'desc'))
+            // return DataTables::of(Penyiar::query()->orderBy('id_penyiar', 'desc'))
+            return DataTables::of(User::query()->where('hak_akses', 'penyiar')->orderBy('id', 'desc'))
                 ->addIndexColumn()
-                ->editColumn('id_penyiar', function ($row) {
-                    return 'PYR-' . $row->id_penyiar;
+                // ->editColumn('id_penyiar', function ($row) {
+                ->editColumn('id', function ($row) {
+                    return 'USR-' . $row->id;
                 })
 
                 ->addColumn('action', function ($row) {
 
-                    $editBtn = '<a href="' . route('penyiar.edit', $row->id_penyiar) . '" class="text-yellow-500 px-2 py-1 rounded-md transition-all transition-duration-300 hover:bg-yellow-100 hover:shadow-sm"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
+                    $editBtn = '<a href="' . route('penyiar.edit', $row->id) . '" class="text-yellow-500 px-2 py-1 rounded-md transition-all transition-duration-300 hover:bg-yellow-100 hover:shadow-sm"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
 
-                    $deleteBtn = '<form id="delete-form-' . $row->id_penyiar . '" action="' . route('penyiar.destroy', $row->id_penyiar) . '" method="POST" style="display:inline;">
+                    $deleteBtn = '<form id="delete-form-' . $row->id . '" action="' . route('penyiar.destroy', $row->id) . '" method="POST" style="display:inline;">
                         ' . csrf_field() . '
                         ' . method_field('DELETE') . '
-                        <button type="button" onclick="deletePenyiar(' . $row->id_penyiar . ')" class="text-red-500 px-2 py-1 rounded-md transition-all duration-300 hover:bg-red-100 hover:shadow-sm">
+                        <button type="button" onclick="deletePenyiar(' . $row->id . ')" class="text-red-500 px-2 py-1 rounded-md transition-all duration-300 hover:bg-red-100 hover:shadow-sm">
                             <i class="fa-solid fa-trash"></i><span class="ml-1 font-bold text-xs">Hapus</span>
                         </button>
                     </form>';

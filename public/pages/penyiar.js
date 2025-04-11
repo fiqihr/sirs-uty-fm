@@ -15,12 +15,16 @@ $(function () {
                 searchable: false,
             },
             {
-                data: "id_penyiar",
-                name: "id_penyiar",
+                data: "id",
+                name: "id",
+                // data: "id_penyiar",
+                // name: "id_penyiar",
             },
             {
-                data: "nama_penyiar",
-                name: "nama_penyiar",
+                data: "name",
+                name: "name",
+                // data: "nama_penyiar",
+                // name: "nama_penyiar",
             },
             {
                 data: "action",

@@ -17,7 +17,7 @@ class ProgramController extends Controller
             return DataTables::of(Program::query()->orderBy('id_program', 'desc'))
                 ->addIndexColumn()
                 ->editColumn('id_program', function ($row) {
-                    return 'TFC-' . $row->id_program;
+                    return 'PRG-' . $row->id_program;
                 })
 
                 ->addColumn('action', function ($row) {

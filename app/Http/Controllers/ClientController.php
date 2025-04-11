@@ -21,6 +21,7 @@ class ClientController extends Controller
                 })
 
                 ->addColumn('action', function ($row) {
+                    $showBtn = '<a href="' . route('client.show', $row->id_client) . '" class=" text-blue-400 px-2 py-1 rounded-md transition-all transition-duration-300 hover:bg-blue-100 hover:shadow-sm"><i class="fa-solid fa-eye"></i><span class="ml-1 font-bold text-xs">Detail</span></a>';
 
                     $editBtn = '<a href="' . route('client.edit', $row->id_client) . '" class="text-yellow-500 px-2 py-1 rounded-md transition-all transition-duration-300 hover:bg-yellow-100 hover:shadow-sm"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
 
@@ -34,7 +35,7 @@ class ClientController extends Controller
 
 
 
-                    return $editBtn . $deleteBtn;
+                    return $showBtn . $editBtn . $deleteBtn;
                 })
                 ->rawColumns(['action'])
                 ->toJson();
@@ -78,7 +79,12 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $client = Client::with('iklan')->where('id_client', $id)->first();
+        if ($client) {
+            return view('client.show', compact('client'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
