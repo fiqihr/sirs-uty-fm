@@ -153,8 +153,7 @@ class IklanController extends Controller
 
     function getIklanJson()
     {
-        dd('cek');
-        // $iklan = Iklan::all();
-        // return response()->json($iklan);
+        $iklan = Iklan::all();
+        return response()->json($iklan);
     }
 }

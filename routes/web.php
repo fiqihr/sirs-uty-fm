@@ -22,6 +22,8 @@ Route::get('/', function () {
     return view('dashboard', compact('jumlahClient', 'jumlahIklan', 'jumlahProgram'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/iklan/json', [IklanController::class, 'getIklanJson'])->name('iklan.json');
+
 // Route::middleware(['auth', 'check.access:admin'])->group(function () {
 //     Route::resource('client', ClientController::class);
 //     Route::resource('program', ProgramController::class);
@@ -31,9 +33,8 @@ Route::middleware(['auth', 'check.access:admin,traffic'])->group(function () {
     Route::resource('traffic', TrafficController::class);
     Route::resource('client', ClientController::class);
     Route::resource('iklan', IklanController::class);
-    
+
     // iklan json
-    Route::get('/iklan/json', [IklanController::class, 'getIklanJson'])->name('iklan.json');
 
     // rancangan siar
     Route::get('/rs', function () {

@@ -54,7 +54,8 @@
                                                                 class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                 <option selected disabled> Pilih Iklan </option>
                                                                 @foreach ($iklan as $item)
-                                                                    <option value="{{ $item->id }}">{{ $item->nama_iklan }}</option>
+                                                                    <option value="{{ $item->id }}">
+                                                                        {{ $item->nama_iklan }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -94,7 +95,8 @@
                                                                 class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                 <option selected disabled> Pilih Iklan </option>
                                                                 @foreach ($iklan as $item)
-                                                                    <option value="{{ $item->id }}">{{ $item->nama_iklan }}</option>
+                                                                    <option value="{{ $item->id }}">
+                                                                        {{ $item->nama_iklan }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -168,7 +170,8 @@
                                                                 class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                 <option selected disabled> Pilih Iklan </option>
                                                                 @foreach ($iklan as $item)
-                                                                    <option value="{{ $item->id }}">{{ $item->nama_iklan }}</option>
+                                                                    <option value="{{ $item->id }}">
+                                                                        {{ $item->nama_iklan }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -208,7 +211,8 @@
                                                                 class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                 <option selected disabled> Pilih Iklan </option>
                                                                 @foreach ($iklan as $item)
-                                                                    <option value="{{ $item->id }}">{{ $item->nama_iklan }}</option>
+                                                                    <option value="{{ $item->id }}">
+                                                                        {{ $item->nama_iklan }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -255,52 +259,89 @@
             const parent = btn.closest('td');
             const container = parent.querySelector('.iklan_kuadran');
 
-            // Select Iklan
+            // Wrapper utama untuk satu baris input
+            const wrapperDiv = document.createElement('div');
+            wrapperDiv.className = "flex items-center gap-2 mt-2 baris-kuadran";
+
+            // === Iklan Select ===
+            const selectIklanWrapper = document.createElement('div');
+            selectIklanWrapper.className = "w-2/5";
+
             const selectIklan = document.createElement('select');
             selectIklan.name = "iklan[]";
             selectIklan.className =
-                "w-2/5 bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
-            selectIklan.innerHTML = `
-        <option selected disabled>Pilih Iklan</option>
-        <option value="1">Iklan 1</option>
-        <option value="2">Iklan 2</option>
-    `;
+                "bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
 
-            // Select Kuadran
+            // Opsi default
+            selectIklan.innerHTML = `<option selected disabled>Pilih Iklan</option>`;
+
+            // Fetch data iklan dari backend
+            fetch('/iklan/json')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.id_iklan;
+                        option.textContent = item.nama_iklan;
+                        selectIklan.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Gagal mengambil data iklan:', error);
+                });
+
+            selectIklanWrapper.appendChild(selectIklan);
+
+            // === Kuadran Select ===
+            const selectKuadranWrapper = document.createElement('div');
+            selectKuadranWrapper.className = "w-2/5";
+
             const selectKuadran = document.createElement('select');
             selectKuadran.name = "kuadran[]";
             selectKuadran.className =
-                "w-2/5 bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
+                "bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
+
             selectKuadran.innerHTML = `
         <option selected disabled>Pilih Kuadran</option>
-        <option value="A">Kuadran A</option>
-        <option value="B">Kuadran B</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
     `;
 
-            // Tombol Hapus
-            // Tombol hapus sebagai div dengan icon SVG
-            const deleteBtn = document.createElement('div');
-            deleteBtn.className = "text-center w-1/5 text-red-600 cursor-pointer flex items-center justify-center";
-            deleteBtn.innerHTML = `<div class="py-1 px-3 rounded-md hover:bg-red-200 hover:shadow-lg transition-all">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-  <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z" clip-rule="evenodd" />
-</svg></div>
+            selectKuadranWrapper.appendChild(selectKuadran);
 
-`;
+            // === Tombol Hapus ===
+            const deleteBtnWrapper = document.createElement('div');
+            deleteBtnWrapper.className = "w-1/5 flex items-center justify-center";
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = "button";
             deleteBtn.onclick = function() {
-                barisForm.remove(); // hapus baris form ini
+                hapusBaris(this);
             };
+            deleteBtn.className = "text-red-500 hover:text-red-700";
+            deleteBtn.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="size-6" viewBox="0 0 24 24">
+        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z" clip-rule="evenodd" />
+    </svg>
+`;
+
+            deleteBtnWrapper.appendChild(deleteBtn);
+
+            // Gabungkan semuanya
+            wrapperDiv.appendChild(selectIklanWrapper);
+            wrapperDiv.appendChild(selectKuadranWrapper);
+            wrapperDiv.appendChild(deleteBtnWrapper);
 
 
-            // Gabungkan ke dalam satu baris flex
-            const barisForm = document.createElement('div');
-            barisForm.className = "flex gap-2 items-center"; // items-center biar tombol hapus sejajar
-            barisForm.appendChild(selectIklan);
-            barisForm.appendChild(selectKuadran);
-            barisForm.appendChild(deleteBtn);
+            // Tambahkan ke container
+            container.appendChild(wrapperDiv);
+        }
 
-            // Tambahkan ke dalam container
-            container.appendChild(barisForm);
+        function hapusBaris(btn) {
+            const baris = btn.closest('.baris-kuadran');
+            baris.remove();
         }
     </script>
 </x-sidebar-navbar-layout>
