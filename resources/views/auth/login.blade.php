@@ -3,8 +3,8 @@
         <div class="w-1/2 flex justify-center items-center bg-gradient-to-br from-primary to-white">
             <div class=" w-1/2">
                 <p class="mb-2 text-4xl font-bold">SIRS</p>
-                <p class="mb-5 text-gray-500">Lorem Ipsum Dolor Sit Amet</p>
-                <form class="max-w-sm mx-auto" method="POST" action="{{ route('login') }}">
+                <p class="mb-5 text-gray-500">Sistem Informasi Rancangan Siar UTY FM MEDARI</p>
+                <form class="mx-auto" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="mb-5">
                         <label for="email" class="block mb-2 text-sm font-bold text-gray-900">Email</label>

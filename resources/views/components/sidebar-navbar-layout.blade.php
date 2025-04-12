@@ -103,7 +103,7 @@
                 @endif
                 @if ($akses === 'admin' || $akses === 'penyiar' || $akses === 'traffic')
                     <li>
-                        <a href="{{ route('rs.index') }}"    
+                        <a href="{{ route('rancangan-siar.index') }}"
                             class="mt-2 text-sm flex items-center p-2 rounded-lg  hover:bg-yellow-100 group text-secondary ">
                             <!-- Heroicons: Document Text -->
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
