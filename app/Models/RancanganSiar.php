@@ -16,4 +16,19 @@ class RancanganSiar extends Model
     {
         return $this->belongsTo(TanggalRs::class, 'id_tgl_rs', 'id_tgl_rs');
     }
+
+    public function iklan()
+    {
+        return $this->belongsTo(Iklan::class, 'id_iklan', 'id_iklan');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'id_program', 'id_program');
+    }
 }

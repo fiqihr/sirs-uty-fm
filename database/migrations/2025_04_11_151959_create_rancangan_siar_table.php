@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_tgl_rs');
             $table->string('jam');
             $table->integer('kuadran');
-            $table->dateTime('menit_putar')->nullable();
+            $table->time('menit_putar')->nullable();
             $table->timestamps();
 
             // fk ke tabel jam dan iklan

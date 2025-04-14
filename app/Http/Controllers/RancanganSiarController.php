@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CekTanggalRequest;
 use App\Models\Iklan;
 use App\Models\Jam;
+use App\Models\Penyiar;
 use App\Models\RancanganSiar;
 use App\Models\Pivot;
+use App\Models\Program;
 use App\Models\TanggalRs;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -53,10 +56,10 @@ class RancanganSiarController extends Controller
 
                     return $showBtn . $deleteBtn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['rentang_jam', 'action'])
                 ->toJson();
         }
-        return view('rancangan_siar.index');
+        return view('rancangan_siar.index_penyiar');
     }
 
     /**
@@ -109,7 +112,10 @@ class RancanganSiarController extends Controller
     {
         $tanggal = TanggalRs::findOrFail($id);
         $rancangan_siar = RancanganSiar::where('id_tgl_rs', $id)->get();
-        return view('rancangan_siar.show', compact('tanggal', 'rancangan_siar'));
+        $penyiars = User::where('hak_akses', 'penyiar')->get();
+        $programs = Program::all();
+        $iklan = RancanganSiar::where('id_tgl_rs', $id)->get()->count('id_iklan');
+        return view('rancangan_siar.show', compact('tanggal', 'rancangan_siar', 'penyiars', 'programs', 'iklan'));
     }
 
     /**
