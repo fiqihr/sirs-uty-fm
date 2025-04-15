@@ -23,9 +23,9 @@ class CekTanggalRequest extends FormRequest
     {
         return [
             'tanggal' => 'required|date|unique:tanggal_rs,tanggal',
-            'id_iklan' => 'required|integer',
-            'jam' => 'required',
-            'kuadran' => 'required',
+            // 'id_iklan' => 'required',
+            // 'jam' => 'required',
+            // 'kuadran' => 'required',
         ];
     }
 }

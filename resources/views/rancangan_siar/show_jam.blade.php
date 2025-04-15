@@ -19,7 +19,7 @@
                 <div class=" w-1/2">
                     <label for="penyiar" class="block mb-2 text-sm font-bold ">Nama Penyiar</label>
                     <select id="penyiar" name="penyiar"
-                        class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                        class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-md focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                         <option selected disabled> --- </option>
                         @foreach ($semuaPenyiar as $penyiar)
                             <option value="{{ $penyiar->id }}" @if (in_array($penyiar->id, $cekPenyiar)) selected @endif>
@@ -33,7 +33,7 @@
                 <div class="mb-5 w-1/2">
                     <label for="program" class="block mb-2 text-sm font-bold ">Nama Program</label>
                     <select id="program" name="program"
-                        class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                        class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-md focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                         <option selected disabled> --- </option>
                         @foreach ($semuaProgram as $program)
                             <option value="{{ $program->id_program }}"
@@ -75,7 +75,7 @@
                                             <input type="hidden" name="id_rancangan_siar[]"
                                                 value="{{ $item->id_rs }}">
                                             <input name="menit_putar[]" type="time"
-                                                class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 @if ($item->menit_putar == null)  @endif"
+                                                class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-md focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 @if ($item->menit_putar == null)  @endif"
                                                 value="{{ $item->menit_putar ?? null }}" required
                                                 oninput="validity.valid || (value = '')">
                                         </div>
@@ -85,6 +85,25 @@
                     </tbody>
                 </table>
             </div>
+            <hr class="mt-8">
+            <div class="row flex gap-4 mt-8 my-4">
+                <div class="w-2/3">
+                    <label for="message" class=" text-sm font-medium">Memo</label>
+                    <textarea id="message" rows="4"
+                        class="mt-2 p-2.5 w-full text-sm  bg-gray-50 rounded-md border border-gray-300 focus:ring-gray-500 focus:border-gray-500  "
+                        placeholder="Memo..."></textarea>
+                </div>
+                <div class="w-1/3">
+                    <label for="menu-action" class=" text-sm font-medium ">Menu Action</label>
+                    <textarea id="menu-action" rows="4"
+                        class="mt-2 p-2.5 w-full text-sm  bg-gray-50 rounded-md border border-gray-300 focus:ring-gray-500 focus:border-gray-500  "
+                        placeholder="Menu Action/Acara..."></textarea>
+                </div>
+            </div>
+
+            {{-- <div class="w-1-3">
+                    <label for="menu-action"></label>
+                </div> --}}
             <div class="flex justify-end mt-5">
                 <button type="submit" id="btn-submit"
                     class=" transition-all transition-duration-300  font-bold py-1 px-3 rounded-md {{ $rancanganSiar->isEmpty() ? 'hover:bg-gray-200  cursor-not-allowed' : 'hover:bg-green-200 text-green-500' }}"

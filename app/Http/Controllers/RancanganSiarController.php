@@ -13,6 +13,7 @@ use App\Models\RentangJam;
 use App\Models\TanggalRs;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class RancanganSiarController extends Controller
@@ -81,12 +82,41 @@ class RancanganSiarController extends Controller
             'tanggal' => $request->tanggal,
         ]);
 
-        $simpan_rs = RancanganSiar::create([
-            'id_iklan' => $request->id_iklan,
-            'id_tgl_rs' => $simpan_tanggal->id_tgl_rs,
-            'jam' => $request->jam,
-            'kuadran' => $request->kuadran,
-        ]);
+        // Ambil data array dari form
+        $data_list = $request->data; // ini akan berupa array dari baris-baris yang berisi jam, iklan[], kuadran[]
+        // dd($data_list);
+
+        // Loop setiap baris
+        foreach ($data_list as $baris) {
+            $jam = $baris['jam'];
+            $iklan_array = $baris['iklan'] ?? [];
+            $kuadran_array = $baris['kuadran'] ?? [];
+
+            // Pastikan jumlah iklan dan kuadran cocok
+            $count = min(count($iklan_array), count($kuadran_array));
+
+            for ($i = 0; $i < $count; $i++) {
+                $simpan_rs = RancanganSiar::create([
+                    'id_iklan' => $iklan_array[$i],
+                    'id_tgl_rs' => $simpan_tanggal->id_tgl_rs,
+                    'jam' => $jam,
+                    'kuadran' => $kuadran_array[$i],
+                ]);
+            }
+        }
+
+
+        // dd($request->all());
+        // $simpan_tanggal = TanggalRs::create([
+        //     'tanggal' => $request->tanggal,
+        // ]);
+
+        // $simpan_rs = RancanganSiar::create([
+        //     'id_iklan' => $request->id_iklan,
+        //     'id_tgl_rs' => $simpan_tanggal->id_tgl_rs,
+        //     'jam' => $request->jam,
+        //     'kuadran' => $request->kuadran,
+        // ]);
 
 
         // $simpan_pivot = Pivot::create([
