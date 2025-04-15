@@ -10,30 +10,42 @@
                 <p class="font-bold text-2xl">{{ formatHari($tanggal->tanggal) }}</p>
             </div>
             <div class="flex gap-2 mb-8">
-                <div class="bg-gray-200 p-8 rounded-md shadow-md w-1/4">Client</div>
-                <div class="bg-gray-200 p-8 rounded-md shadow-md w-1/4">Program</div>
-                <div class="bg-gray-200 p-8 rounded-md shadow-md w-1/4">Penyiar</div>
-                <div class="bg-gray-200 p-8 rounded-md shadow-md w-1/4">Iklan {{ $iklan }}</div>
+                <div
+                    class="bg-gradient-to-r from-purple-400 to-purple-300 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
+                    <span>Program</span> <span>{{ $jumlahProgram }}</span>
+                </div>
+                <div
+                    class="bg-gradient-to-r from-purple-400 to-purple-300 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
+                    <span>Penyiar</span> <span>{{ $jumlahPenyiar }}</span>
+                </div>
+                <div
+                    class="bg-gradient-to-r from-purple-400 to-purple-300 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
+                    <span>Iklan</span> <span>{{ $iklan }}</span>
+                </div>
             </div>
-            <p class="text-xl font-bold mb-2">Rentang Jam</p>
+            <hr>
+            <p class="text-xl font-bold mb-2 mt-4">Rentang Jam</p>
             <p>Silahkan pilih rentang jam untuk melihat iklan dan program pada hari {{ formatHari($tanggal->tanggal) }}
             </p>
             <div class="mt-4 grid w-full grid-cols-2 gap-4">
-                <a href="#"
-                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md">06:00
-                    - 10:00
+                <a href="{{ route('rentangJamRs', ['idTglRs' => $tanggal->id_tgl_rs, 'rentangAwal' => 1, 'rentangAkhir' => 4]) }}"
+                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">
+                    06:00 WIB - 10:00 WIB
                 </a>
-                <a href="#"
-                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md">06:00
-                    - 10:00
+                <a href="{{ route('rentangJamRs', ['idTglRs' => $tanggal->id_tgl_rs, 'rentangAwal' => 5, 'rentangAkhir' => 9]) }}"
+                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">10:00
+                    WIB
+                    - 15:00 WIB
                 </a>
-                <a href="#"
-                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md">06:00
-                    - 10:00
+                <a href="{{ route('rentangJamRs', ['idTglRs' => $tanggal->id_tgl_rs, 'rentangAwal' => 10, 'rentangAkhir' => 14]) }}"
+                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">15:00
+                    WIB
+                    - 20:00 WIB
                 </a>
-                <a href="#"
-                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md">06:00
-                    - 10:00
+                <a href="{{ route('rentangJamRs', ['idTglRs' => $tanggal->id_tgl_rs, 'rentangAwal' => 15, 'rentangAkhir' => 19]) }}"
+                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">20:00
+                    WIB
+                    - 01:00 WIB
                 </a>
             </div>
         </div>

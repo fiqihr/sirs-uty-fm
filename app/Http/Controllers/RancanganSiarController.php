@@ -9,6 +9,7 @@ use App\Models\Penyiar;
 use App\Models\RancanganSiar;
 use App\Models\Pivot;
 use App\Models\Program;
+use App\Models\RentangJam;
 use App\Models\TanggalRs;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -113,9 +114,17 @@ class RancanganSiarController extends Controller
         $tanggal = TanggalRs::findOrFail($id);
         $rancangan_siar = RancanganSiar::where('id_tgl_rs', $id)->get();
         $penyiars = User::where('hak_akses', 'penyiar')->get();
+        $jumlahPenyiar = RancanganSiar::where('id_tgl_rs', $id)
+            ->distinct('id_user')
+            ->count('id_user');
         $programs = Program::all();
-        $iklan = RancanganSiar::where('id_tgl_rs', $id)->get()->count('id_iklan');
-        return view('rancangan_siar.show', compact('tanggal', 'rancangan_siar', 'penyiars', 'programs', 'iklan'));
+        $jumlahProgram = RancanganSiar::where('id_tgl_rs', $id)
+            ->distinct('id_program')
+            ->count('id_program');
+        $iklan = RancanganSiar::where('id_tgl_rs', $id)
+            ->distinct('id_iklan')
+            ->count('id_iklan');
+        return view('rancangan_siar.show', compact('tanggal', 'rancangan_siar', 'penyiars', 'programs', 'iklan', 'jumlahPenyiar', 'jumlahProgram'));
     }
 
     /**
@@ -147,5 +156,70 @@ class RancanganSiarController extends Controller
         $cekTanggal = TanggalRs::where('tanggal', $request->tanggal)->exists();
 
         return response()->json(['exists' => $cekTanggal]);
+    }
+
+    public function rentangJamRs($idTglRs, $rentangAwal, $rentangAkhir)
+    {
+        // dd($idTglRs);
+
+        $jamList = RentangJam::whereBetween('id_rentang_jam', [$rentangAwal, $rentangAkhir])
+            ->pluck('rentang_jam')
+            ->toArray();
+
+        $rancanganSiar = RancanganSiar::where('id_tgl_rs', $idTglRs)
+            ->whereIn('jam', $jamList)
+            ->get();
+
+        $semuaPenyiar = User::where('hak_akses', 'penyiar')->get();
+        $semuaProgram = Program::all();
+
+        $tanggal = TanggalRs::where('id_tgl_rs', $idTglRs)->first();
+
+        $jamAwalFull = RentangJam::find($rentangAwal)?->rentang_jam;
+        $jamAkhirFull = RentangJam::find($rentangAkhir)?->rentang_jam;
+
+        $jamAwal = substr($jamAwalFull, 0, 5);
+        $jamAkhir = substr($jamAkhirFull, -5);
+
+        $jamAwalAkhir = "$jamAwal WIB - $jamAkhir WIB";
+
+        $cekPenyiar = RancanganSiar::where('id_tgl_rs', $idTglRs)
+            // ->whereBetween('id_rs', [$rentangAwal, $rentangAkhir])
+            ->whereIn('jam', $jamList)
+            ->pluck('id_user')
+            ->unique()
+            ->toArray();
+
+        $cekProgram = RancanganSiar::where('id_tgl_rs', $idTglRs)
+            // ->whereBetween('id_rs', [$rentangAwal, $rentangAkhir])
+            ->whereIn('jam', $jamList)
+            ->pluck('id_program')
+            ->unique()
+            ->toArray();
+
+        return view('rancangan_siar.show_jam', compact('rancanganSiar', 'semuaPenyiar', 'semuaProgram', 'tanggal', 'jamAwalAkhir', 'cekPenyiar', 'cekProgram'));
+    }
+
+    public function simpanMenit(Request $request)
+    {
+        $penyiar = $request->penyiar;
+        $program = $request->program;
+        $idRsList = $request->id_rancangan_siar;
+        $menitPutarList = $request->menit_putar;
+
+        foreach ($idRsList as $index => $idRancanganSiar) {
+            $update = RancanganSiar::where('id_rs', $idRancanganSiar)->update([
+                'id_user' => $penyiar,
+                'id_program' => $program,
+                'menit_putar' => $menitPutarList[$index],
+            ]);
+        }
+
+        if ($update) {
+            // return session()->flash('program_berhasil', 'Program berhasil ditambahkan!');
+            return redirect()->route('rancangan-siar.index');
+        } else {
+            return redirect()->back();
+        }
     }
 }

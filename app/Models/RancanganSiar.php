@@ -31,4 +31,9 @@ class RancanganSiar extends Model
     {
         return $this->belongsTo(Program::class, 'id_program', 'id_program');
     }
+
+    public function rentangJam()
+    {
+        return $this->belongsTo(RentangJam::class, 'id_rentang_jam', 'id');
+    }
 }

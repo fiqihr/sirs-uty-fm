@@ -26,9 +26,12 @@ Route::get('/', function () {
 
 Route::get('/iklan/json', [IklanController::class, 'getIklanJson'])->name('iklan.json');
 
+Route::get('/rancangan-siar/{idTglRs}/{rentangAwal}-{rentangAkhir}', [RancanganSiarController::class, 'rentangJamRs'])->name('rentangJamRs');
+
 
 Route::resource('rancangan-siar', RancanganSiarController::class);
 Route::get('/cek-tanggal', [RancanganSiarController::class, 'cekTanggal'])->name('cek.tanggal');
+Route::put('/simpan-menit', [RancanganSiarController::class, 'simpanMenit'])->name('simpan.menit');
 
 
 // Route::middleware(['auth', 'check.access:admin'])->group(function () {
