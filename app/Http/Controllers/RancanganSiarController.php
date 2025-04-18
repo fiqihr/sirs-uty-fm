@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CekTanggalRequest;
 use App\Models\Iklan;
 use App\Models\Jam;
+use App\Models\Memo;
+use App\Models\MenuAction;
 use App\Models\Penyiar;
 use App\Models\RancanganSiar;
 use App\Models\Pivot;
+use App\Models\PivotMemo;
+use App\Models\PivotMenuAction;
 use App\Models\Program;
 use App\Models\RentangJam;
 use App\Models\TanggalRs;
@@ -78,21 +82,20 @@ class RancanganSiarController extends Controller
      */
     public function store(CekTanggalRequest $request)
     {
+        // Simpan tanggal
         $simpan_tanggal = TanggalRs::create([
             'tanggal' => $request->tanggal,
         ]);
 
-        // Ambil data array dari form
-        $data_list = $request->data; // ini akan berupa array dari baris-baris yang berisi jam, iklan[], kuadran[]
-        // dd($data_list);
+        $data_list = $request->data;
+        $all_rancangan_ids = []; // Simpan semua id_rs untuk pivot memo nanti
 
-        // Loop setiap baris
+        // Loop data rancangan siar
         foreach ($data_list as $baris) {
             $jam = $baris['jam'];
             $iklan_array = $baris['iklan'] ?? [];
             $kuadran_array = $baris['kuadran'] ?? [];
 
-            // Pastikan jumlah iklan dan kuadran cocok
             $count = min(count($iklan_array), count($kuadran_array));
 
             for ($i = 0; $i < $count; $i++) {
@@ -102,38 +105,81 @@ class RancanganSiarController extends Controller
                     'jam' => $jam,
                     'kuadran' => $kuadran_array[$i],
                 ]);
+
+                // Simpan id_rs untuk dipakai di pivot
+                $all_rancangan_ids[] = $simpan_rs->id_rs;
             }
         }
 
+        // Simpan memo dan buat relasi ke rancangan_siar (pivot)
+        foreach ($request->memo as $memoText) {
+            $memo = Memo::create([
+                'memo' => $memoText,
+                'status' => 'belum', // default sesuai migrasi
+            ]);
 
-        // dd($request->all());
+            // Buat relasi ke semua rancangan_siar
+            foreach ($all_rancangan_ids as $id_rs) {
+                PivotMemo::create([
+                    'id_memo' => $memo->id_memo,
+                    'id_rs' => $id_rs,
+                ]);
+            }
+        }
+
+        foreach ($request->menu_action as $menuActionText) {
+            $menu_action = MenuAction::create([
+                'menu_action' => $menuActionText,
+                'status' => 'belum', // default sesuai migrasi
+            ]);
+
+            // Buat relasi ke semua rancangan_siar
+            foreach ($all_rancangan_ids as $id_rs) {
+                PivotMenuAction::create([
+                    'id_menu_action' => $menu_action->id_menu_action,
+                    'id_rs' => $id_rs,
+                ]);
+            }
+        }
+        return redirect()->route('rancangan-siar.index');
+
+
+
+
+        // --------------------------------------------
         // $simpan_tanggal = TanggalRs::create([
         //     'tanggal' => $request->tanggal,
         // ]);
 
-        // $simpan_rs = RancanganSiar::create([
-        //     'id_iklan' => $request->id_iklan,
-        //     'id_tgl_rs' => $simpan_tanggal->id_tgl_rs,
-        //     'jam' => $request->jam,
-        //     'kuadran' => $request->kuadran,
-        // ]);
+        // // Ambil data array dari form
+        // $data_list = $request->data; // ini akan berupa array dari baris-baris yang berisi jam, iklan[], kuadran[]
+        // // dd($data_list);
 
+        // // Loop setiap baris
+        // foreach ($data_list as $baris) {
+        //     $jam = $baris['jam'];
+        //     $iklan_array = $baris['iklan'] ?? [];
+        //     $kuadran_array = $baris['kuadran'] ?? [];
 
-        // $simpan_pivot = Pivot::create([
-        //     'id_penayangan' => $simpan_penayangan->id_penayangan,
-        //     'id_tanggal_rs' => $simpan_tanggal->id_tanggal_rs,
-        // ]);
+        //     // Pastikan jumlah iklan dan kuadran cocok
+        //     $count = min(count($iklan_array), count($kuadran_array));
 
-        // dd($simpan_penayangan);
-        // dd($simpan_tanggal);
-        // dd($simpan_pivot);
+        //     for ($i = 0; $i < $count; $i++) {
+        //         $simpan_rs = RancanganSiar::create([
+        //             'id_iklan' => $iklan_array[$i],
+        //             'id_tgl_rs' => $simpan_tanggal->id_tgl_rs,
+        //             'jam' => $jam,
+        //             'kuadran' => $kuadran_array[$i],
+        //         ]);
+        //     }
+        // }
 
-        if ($simpan_tanggal && $simpan_rs) {
-            // session()->flash('penayangan_berhasil', 'Penayangan Berhasil ditambahkan');
-            return redirect()->route('rancangan-siar.index');
-        } else {
-            return redirect()->back();
-        }
+        // if ($simpan_tanggal && $simpan_rs) {
+        //     // session()->flash('penayangan_berhasil', 'Penayangan Berhasil ditambahkan');
+        //     return redirect()->route('rancangan-siar.index');
+        // } else {
+        //     return redirect()->back();
+        // }
     }
 
     /**
@@ -154,6 +200,7 @@ class RancanganSiarController extends Controller
         $iklan = RancanganSiar::where('id_tgl_rs', $id)
             ->distinct('id_iklan')
             ->count('id_iklan');
+
         return view('rancangan_siar.show', compact('tanggal', 'rancangan_siar', 'penyiars', 'programs', 'iklan', 'jumlahPenyiar', 'jumlahProgram'));
     }
 
@@ -196,7 +243,11 @@ class RancanganSiarController extends Controller
             ->pluck('rentang_jam')
             ->toArray();
 
-        $rancanganSiar = RancanganSiar::where('id_tgl_rs', $idTglRs)
+        // $rancanganSiar = RancanganSiar::where('id_tgl_rs', $idTglRs)
+        //     ->whereIn('jam', $jamList)
+        //     ->get();
+        $rancanganSiar = RancanganSiar::with(['memoPivot.memo', 'menuActionPivot.menu_action'])
+            ->where('id_tgl_rs', $idTglRs)
             ->whereIn('jam', $jamList)
             ->get();
 
@@ -227,29 +278,75 @@ class RancanganSiarController extends Controller
             ->unique()
             ->toArray();
 
+        // foreach ($rancanganSiar as $rs) {
+        //     $getMemo = PivotMemo::where('id_rs', $rs->id_rs)->first();
+        //     dd($getMemo);
+        // }
+
+        // dd($rancanganSiar);
+        // $getMemo = PivotMemo::where('id_rs', $rancanganSiar->id_rs)->first();
+        // // $getMenuAction = PivotMenuAction::where('id_rs', $id)->get();
+
+        // dd($getMemo);
+
         return view('rancangan_siar.show_jam', compact('rancanganSiar', 'semuaPenyiar', 'semuaProgram', 'tanggal', 'jamAwalAkhir', 'cekPenyiar', 'cekProgram'));
     }
 
     public function simpanMenit(Request $request)
     {
+        $statusMemo = $request->status_memo ?? [];
+        $statusMenuAction = $request->status_menu_action ?? [];
+
+        // Ambil semua id memo yang terkait dengan rancangan_siar
+        $idRsList = $request->id_rancangan_siar;
+        $relatedMemoIds = collect();
+        $relatedMenuActionIds = collect();
+
+        foreach ($idRsList as $idRs) {
+            $rs = RancanganSiar::with(['memoPivot.memo', 'menuActionPivot.menu_action'])->find($idRs);
+
+            if ($rs) {
+                foreach ($rs->memoPivot as $pivot) {
+                    if ($pivot->memo) {
+                        $relatedMemoIds->push($pivot->memo->id_memo);
+                    }
+                }
+
+                foreach ($rs->menuActionPivot as $pivot) {
+                    if ($pivot->menu_action) {
+                        $relatedMenuActionIds->push($pivot->menu_action->id_menu_action);
+                    }
+                }
+            }
+        }
+
+        // Hilangkan duplikat ID
+        $relatedMemoIds = $relatedMemoIds->unique()->values();
+        $relatedMenuActionIds = $relatedMenuActionIds->unique()->values();
+
+        // Update memo
+        Memo::whereIn('id_memo', $statusMemo)->update(['status' => 'selesai']);
+        $uncheckedMemo = $relatedMemoIds->diff($statusMemo);
+        Memo::whereIn('id_memo', $uncheckedMemo)->update(['status' => 'belum']);
+
+        // Update menu_action
+        MenuAction::whereIn('id_menu_action', $statusMenuAction)->update(['status' => 'selesai']);
+        $uncheckedMenuAction = $relatedMenuActionIds->diff($statusMenuAction);
+        MenuAction::whereIn('id_menu_action', $uncheckedMenuAction)->update(['status' => 'belum']);
+
+        // Update Rancangan Siar
         $penyiar = $request->penyiar;
         $program = $request->program;
-        $idRsList = $request->id_rancangan_siar;
         $menitPutarList = $request->menit_putar;
 
         foreach ($idRsList as $index => $idRancanganSiar) {
-            $update = RancanganSiar::where('id_rs', $idRancanganSiar)->update([
+            RancanganSiar::where('id_rs', $idRancanganSiar)->update([
                 'id_user' => $penyiar,
                 'id_program' => $program,
                 'menit_putar' => $menitPutarList[$index],
             ]);
         }
 
-        if ($update) {
-            // return session()->flash('program_berhasil', 'Program berhasil ditambahkan!');
-            return redirect()->route('rancangan-siar.index');
-        } else {
-            return redirect()->back();
-        }
+        return redirect()->route('rancangan-siar.index')->with('success', 'Data berhasil diperbarui.');
     }
 }

@@ -86,18 +86,89 @@
                 </table>
             </div>
             <hr class="mt-8">
+            @php
+                $semuaMemo = collect();
+                foreach ($rancanganSiar as $rs) {
+                    foreach ($rs->memoPivot as $pivot) {
+                        if ($pivot->memo) {
+                            $semuaMemo->push([
+                                'id_memo' => $pivot->memo->id_memo,
+                                'memo' => $pivot->memo->memo,
+                                'status' => $pivot->memo->status,
+                            ]);
+                        }
+                    }
+                }
+                $semuaMenuAction = collect();
+                foreach ($rancanganSiar as $rs) {
+                    foreach ($rs->menuActionPivot as $pivot) {
+                        if ($pivot->menu_action) {
+                            $semuaMenuAction->push([
+                                'id_menu_action' => $pivot->menu_action->id_menu_action,
+                                'menu_action' => $pivot->menu_action->menu_action,
+                                'status' => $pivot->menu_action->status,
+                            ]);
+                        }
+                    }
+                }
+                // Filter duplikat berdasarkan id_memo
+                $uniqueMemo = $semuaMemo->unique('id_memo')->values();
+                $uniqueMenuAction = $semuaMenuAction->unique('id_menu_action')->values();
+            @endphp
             <div class="row flex gap-4 mt-8 my-4">
-                <div class="w-2/3">
-                    <label for="message" class=" text-sm font-medium">Memo</label>
-                    <textarea id="message" rows="4"
-                        class="mt-2 p-2.5 w-full text-sm  bg-gray-50 rounded-md border border-gray-300 focus:ring-gray-500 focus:border-gray-500  "
-                        placeholder="Memo..."></textarea>
+                <div class="w-1/2 bg-gray-100 rounded-md shadow-md p-8">
+                    <label for="memo" class=" text-sm font-medium">Memo</label>
+                    <table class="w-full ">
+                        @if ($uniqueMemo->isNotEmpty())
+                            @foreach ($uniqueMemo as $memo)
+                                <tr class="border-b border-gray-300">
+                                    <td class="py-2">
+                                        <span
+                                            class="font-medium {{ $memo['status'] === 'selesai' ? 'line-through text-gray-500' : '' }}">
+                                            - {{ $memo['memo'] }}
+                                        </span>
+
+                                    </td>
+                                    <td class="py-2">
+                                        <input type="checkbox" name="status_memo[]" value="{{ $memo['id_memo'] }}"
+                                            {{ $memo['status'] === 'selesai' ? 'checked' : '' }}
+                                            class="w-4 h-4 text-emerald-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-gray-500 dark:focus:ring-gray-600">
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr class="border-b border-gray-300">
+                                <td class="py-2">Tidak ada memo.</td>
+                            </tr>
+                        @endif
+                    </table>
                 </div>
-                <div class="w-1/3">
+                <div class="w-1/2 bg-gray-100 rounded-md shadow-md p-8">
                     <label for="menu-action" class=" text-sm font-medium ">Menu Action</label>
-                    <textarea id="menu-action" rows="4"
-                        class="mt-2 p-2.5 w-full text-sm  bg-gray-50 rounded-md border border-gray-300 focus:ring-gray-500 focus:border-gray-500  "
-                        placeholder="Menu Action/Acara..."></textarea>
+                    <table class="w-full ">
+                        @if ($uniqueMenuAction->isNotEmpty())
+                            @foreach ($uniqueMenuAction as $menu_action)
+                                <tr class="border-b border-gray-300">
+                                    <td class="py-2">
+                                        <span
+                                            class="font-medium {{ $menu_action['status'] === 'selesai' ? 'line-through text-gray-500' : '' }}">
+                                            - {{ $menu_action['menu_action'] }}
+                                        </span>
+                                    </td>
+                                    <td class="py-2">
+                                        <input type="checkbox" name="status_menu_action[]"
+                                            value="{{ $menu_action['id_menu_action'] }}"
+                                            {{ $menu_action['status'] === 'selesai' ? 'checked' : '' }}
+                                            class="w-4 h-4 text-emerald-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-gray-500 dark:focus:ring-gray-600">
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr class="border-b border-gray-300">
+                                <td class="py-2">Tidak ada menu action.</td>
+                            </tr>
+                        @endif
+                    </table>
                 </div>
             </div>
 

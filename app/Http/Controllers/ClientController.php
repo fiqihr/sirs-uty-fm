@@ -21,14 +21,14 @@ class ClientController extends Controller
                 })
 
                 ->addColumn('action', function ($row) {
-                    $showBtn = '<a href="' . route('client.show', $row->id_client) . '" class=" text-blue-400 px-2 py-1 rounded-md transition-all transition-duration-300 hover:bg-blue-100 hover:shadow-sm"><i class="fa-solid fa-eye"></i><span class="ml-1 font-bold text-xs">Detail</span></a>';
+                    $showBtn = '<a href="' . route('client.show', $row->id_client) . '" class="btn-detail"><i class="fa-solid fa-eye"></i><span class="ml-1 font-bold text-xs">Detail</span></a>';
 
-                    $editBtn = '<a href="' . route('client.edit', $row->id_client) . '" class="text-yellow-500 px-2 py-1 rounded-md transition-all transition-duration-300 hover:bg-yellow-100 hover:shadow-sm"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
+                    $editBtn = '<a href="' . route('client.edit', $row->id_client) . '" class="btn-edit"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
 
                     $deleteBtn = '<form id="delete-form-' . $row->id_client . '" action="' . route('client.destroy', $row->id_client) . '" method="POST" style="display:inline;">
                         ' . csrf_field() . '
                         ' . method_field('DELETE') . '
-                        <button type="button" onclick="deleteClient(' . $row->id_client . ')" class="text-red-500 px-2 py-1 rounded-md transition-all duration-300 hover:bg-red-100 hover:shadow-sm">
+                        <button type="button" onclick="deleteClient(' . $row->id_client . ')" class="btn-hapus">
                             <i class="fa-solid fa-trash"></i><span class="ml-1 font-bold text-xs">Hapus</span>
                         </button>
                     </form>';

@@ -8,7 +8,7 @@
                 <!-- Teks Dashboard dengan animasi -->
                 <a href="{{ route('dashboard') }}" x-show="sidebarOpen" x-transition:enter="transition-opacity duration-500"
                     x-transition:leave="transition-opacity duration-500 opacity-0"
-                    class="text-lg font-semibold text-gray-700 w-60 border-r">Citra <span
+                    class="text-lg font-semibold text-red_1 w-60 border-r">Citra <span
                         class="text-yellow-500">TRAFFIC</span></a>
 
                 <!-- Tombol Toggle Sidebar dengan animasi -->
@@ -52,7 +52,7 @@
             <ul class="space-y-2 font-medium">
                 <li>
                     <a href="{{ route('dashboard') }}"
-                        class="mb-4 text-sm flex text-secondary items-center p-2 rounded-lg hover:bg-yellow-100 group">
+                        class="mb-4 text-sm flex text-red_1 opacity-70 opacity-70 hover:text-red_2 items-center p-2 rounded-lg hover:bg-rose-100 transition-all duration-200 group">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                             <path fill-rule="evenodd"
                                 d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z"
@@ -65,7 +65,7 @@
                 @if ($akses === 'admin' || $akses === 'traffic')
                     <li>
                         <a href="{{ route('client.index') }}"
-                            class="mt-2 text-sm flex text-secondary items-center p-2 rounded-lg hover:bg-yellow-100 group">
+                            class="mt-2 text-sm flex text-red_1 opacity-70 hover:text-red_2 items-center p-2 rounded-lg hover:bg-rose-100 transition-all duration-200 group">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="size-6">
                                 <path fill-rule="evenodd"
@@ -79,7 +79,7 @@
                     </li>
                     <li>
                         <a href="{{ route('iklan.index') }}"
-                            class="text-sm flex items-center p-2 rounded-lg  hover:bg-yellow-100 group text-secondary ">
+                            class="text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="size-6">
                                 <path fill-rule="evenodd"
@@ -91,7 +91,7 @@
                     </li>
                     <li>
                         <a href="{{ route('traffic.index') }}"
-                            class="text-sm flex items-center p-2 rounded-lg  hover:bg-yellow-100 group text-secondary ">
+                            class="text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="size-6">
                                 <path
@@ -104,7 +104,7 @@
                 @if ($akses === 'admin' || $akses === 'penyiar' || $akses === 'traffic')
                     <li>
                         <a href="{{ route('rancangan-siar.index') }}"
-                            class="mt-2 text-sm flex items-center p-2 rounded-lg  hover:bg-yellow-100 group text-secondary ">
+                            class="mt-2 text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
                             <!-- Heroicons: Document Text -->
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="size-6">
@@ -118,7 +118,7 @@
                 @if ($akses === 'admin' || $akses === 'program_director')
                     <li>
                         <a href="{{ route('penyiar.index') }}"
-                            class="text-sm flex items-center p-2 rounded-lg  hover:bg-yellow-100 group text-secondary ">
+                            class="text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="size-6">
                                 <path
@@ -131,7 +131,7 @@
                     </li>
                     <li>
                         <a href="{{ route('program.index') }}"
-                            class="mb-4 text-sm flex items-center p-2 rounded-lg  hover:bg-yellow-100 group text-secondary ">
+                            class="mb-4 text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
                             <!-- Heroicons: Document Text -->
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="size-6">
@@ -214,7 +214,7 @@
     </aside>
 
     <!-- Konten utama -->
-    <div :class="sidebarOpen ? 'sm:ml-64' : 'ml-0'" class="pt-20 transition-all duration-300">
+    <div :class="sidebarOpen ? 'sm:ml-64' : 'ml-0'" class="pt-20 transition-all duration-200">
         <div class="p-4">
             {{-- <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg ">
                     <div class="grid grid-cols-3 gap-4 mb-4">

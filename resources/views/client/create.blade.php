@@ -9,12 +9,12 @@
             <div class="mb-5">
                 <label for="nama_client" class="block mb-2 text-sm font-medium text-gray-600 ">Nama Client</label>
                 <input type="text" id="nama_client" name="nama_client"
-                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
+                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-3"
                     required />
             </div>
             <div class="flex justify-end mt-2">
                 <button type="submit"
-                    class="hover:bg-green-200 transition-all transition-duration-300 text-green-500 font-bold py-1 px-3 rounded-md"><i
+                    class="btn-simpan"><i
                         class="fa-solid fa-floppy-disk"></i><span class="ml-1 font-bold">Simpan</span>
                 </button>
             </div>

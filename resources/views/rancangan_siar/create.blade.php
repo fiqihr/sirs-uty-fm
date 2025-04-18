@@ -19,7 +19,7 @@
                 <div class="mb-5 w-2/3 mx-auto">
                     <label for="tanggal" class="block mb-2 text-sm font-medium text-gray-600 ">Tanggal</label>
                     <input type="date" id="tanggal" name="tanggal"
-                        class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
+                        class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
                         required />
                     <p id="peringatan-tanggal" class="text-red-500 text-sm hidden mt-1 text-center italic"></p>
                 </div>
@@ -27,10 +27,10 @@
                     <div id="accordion-collapse" data-accordion="collapse">
                         <h2 id="accordion-collapse-heading-1">
                             <button type="button"
-                                class="flex items-center justify-between w-full p-5 font-medium rtl:text-right bg-primary border border-b-0 border-gray-200 text-secondary rounded-md focus:ring-4 focus:ring-gray-200  hover:bg-gray-100  gap-3"
+                                class="flex items-center justify-between w-full p-5 font-medium rtl:text-right  border border-b-0 border-gray-200  rounded-md focus:ring-4 focus:ring-gray-200  hover:bg-gray-100  gap-3"
                                 data-accordion-target="#accordion-collapse-body-1" aria-expanded="true"
                                 aria-controls="accordion-collapse-body-1">
-                                <span>06:00 WIB - 10:00 WIB</span>
+                                <span class="font-bold">06:00 WIB - 10:00 WIB</span>
                                 <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -67,7 +67,7 @@
                                                         <div class="flex gap-2">
                                                             <div class="w-2/5">
                                                                 <select id="iklan" name="data[0][iklan][]"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                     <option selected disabled> Pilih Iklan </option>
                                                                     @foreach ($iklan as $item)
                                                                         <option value="{{ $item->id_iklan }}">
@@ -77,7 +77,7 @@
                                                             </div>
                                                             <div class="w-2/5">
                                                                 <select id="kuadran" name="data[0][kuadran][]"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                     <option selected disabled> Pilih Kuadran </option>
                                                                     <option value="1">1</option>
                                                                     <option value="2">2</option>
@@ -114,7 +114,7 @@
                                                         <div class="flex gap-2">
                                                             <div class="w-2/5">
                                                                 <select id="iklan" name="data[1][iklan][]"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                     <option selected disabled> Pilih Iklan </option>
                                                                     @foreach ($iklan as $item)
                                                                         <option value="{{ $item->id_iklan }}">
@@ -124,7 +124,7 @@
                                                             </div>
                                                             <div class="w-2/5">
                                                                 <select id="kuadran" name="data[1][kuadran][]"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                     <option selected disabled> Pilih Kuadran </option>
                                                                     <option value="1">1</option>
                                                                     <option value="2">2</option>
@@ -149,6 +149,101 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <tr data-index="2"
+                                                class="bg-white border-b border-gray-200 hover:bg-gray-50 ">
+                                                <input type="hidden" name="data[2][jam]" value="08:00 - 09:00">
+                                                <th scope="row"
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                                    08:00 - 09:00
+                                                </th>
+                                                <td class="px-6 py-4">
+                                                    <div class="iklan_kuadran flex flex-col gap-2 w-full">
+                                                        <div class="flex gap-2">
+                                                            <div class="w-2/5">
+                                                                <select id="iklan" name="data[2][iklan][]"
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    <option selected disabled> Pilih Iklan </option>
+                                                                    @foreach ($iklan as $item)
+                                                                        <option value="{{ $item->id_iklan }}">
+                                                                            {{ $item->nama_iklan }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="w-2/5">
+                                                                <select id="kuadran" name="data[2][kuadran][]"
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    <option selected disabled> Pilih Kuadran </option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="w-1/5 text-center">
+                                                                <button type="button"
+                                                                    onclick="tambahIklanKuadran(this)"
+                                                                    class="hover:shadow-lg hover:bg-sky-200 transition-all transition-duration-300 text-sky-500 font-bold py-1 px-3 rounded-md"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        viewBox="0 0 24 24" fill="currentColor"
+                                                                        class="size-6">
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                                                                            clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr data-index="3"
+                                                class="bg-white border-b border-gray-200 hover:bg-gray-50 ">
+                                                <input type="hidden" name="data[3][jam]" value="09:00 - 10:00">
+                                                <th scope="row"
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                                    09:00 - 10:00
+                                                </th>
+                                                <td class="px-6 py-4">
+                                                    <div class="iklan_kuadran flex flex-col gap-2 w-full">
+                                                        <div class="flex gap-2">
+                                                            <div class="w-2/5">
+                                                                <select id="iklan" name="data[3][iklan][]"
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    <option selected disabled> Pilih Iklan </option>
+                                                                    @foreach ($iklan as $item)
+                                                                        <option value="{{ $item->id_iklan }}">
+                                                                            {{ $item->nama_iklan }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="w-2/5">
+                                                                <select id="kuadran" name="data[3][kuadran][]"
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    <option selected disabled> Pilih Kuadran </option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="w-1/5 text-center">
+                                                                <button type="button"
+                                                                    onclick="tambahIklanKuadran(this)"
+                                                                    class="hover:shadow-lg hover:bg-sky-200 transition-all transition-duration-300 text-sky-500 font-bold py-1 px-3 rounded-md"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        viewBox="0 0 24 24" fill="currentColor"
+                                                                        class="size-6">
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                                                                            clip-rule="evenodd" />
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
                                             {{-- <tr class="bg-gray-50 border-b border-gray-200 hover:bg-gray-50 ">
                                                 <th scope="row"
                                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
@@ -159,7 +254,7 @@
                                                         <div class="flex gap-2">
                                                             <div class="w-2/5">
                                                                 <select id="iklan" name="iklan[]-"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                     <option selected disabled> Pilih Iklan </option>
                                                                     @foreach ($iklan as $item)
                                                                         <option value="{{ $item->id }}">
@@ -169,7 +264,7 @@
                                                             </div>
                                                             <div class="w-2/5">
                                                                 <select id="kuadran" name="kuadran[]"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                     <option selected disabled> Pilih Kuadran </option>
                                                                     <option value="#">1</option>
                                                                 </select>
@@ -190,8 +285,48 @@
                                                     </div>
                                                 </td>
                                             </tr> --}}
+
                                         </tbody>
                                     </table>
+                                    <div class="flex w-full gap-4 mt-12 mb-4">
+                                        <div class="w-1/2 rounded-md shadow-lg p-4 bg-gray-100" id="memo-container">
+                                            <label for="memo"
+                                                class="block mb-2 text-gray-600 font-bold">Memo</label>
+                                            <div class="flex gap-2 mb-2">
+                                                <input type="text" name="memo[]"
+                                                    class="bg-gray-100 border-0 border-b border-gray-300 text-gray-600 text-sm focus:ring-0 focus:border-gray-500 block w-full px-2.5 py-2"
+                                                    placeholder="Masukkan memo..." />
+                                                <button type="button" onclick="tambahMemo(this)"
+                                                    class="hover:shadow-lg hover:bg-sky-200 transition-all transition-duration-300 text-sky-500 font-bold py-1 px-3 rounded-md">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" class="size-6">
+                                                        <path fill-rule="evenodd"
+                                                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="w-1/2 rounded-md shadow-lg p-4 bg-gray-100"
+                                            id="menu-action-container">
+                                            <label for="menu_action" class="block mb-2 text-gray-600 font-bold">Menu
+                                                Action</label>
+                                            <div class="flex gap-2 mb-2">
+                                                <input type="text" id="menu_action" name="menu_action[]"
+                                                    class="bg-gray-100 border-0 border-b border-gray-300 text-gray-600 text-sm focus:ring-0 focus:border-gray-500 block w-full px-2.5 py-2"
+                                                    placeholder="Masukkan menu action/acara..." />
+                                                <button type="button" onclick="tambahMenuAction(this)"
+                                                    class="hover:shadow-lg hover:bg-sky-200 transition-all transition-duration-300 text-sky-500 font-bold py-1 px-3 rounded-md"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" class="size-6">
+                                                        <path fill-rule="evenodd"
+                                                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +335,7 @@
                                 class="flex items-center justify-between w-full p-5 font-medium rtl:text-right bg-primary border border-b-0 border-gray-200 text-secondary rounded-md focus:ring-4 focus:ring-gray-200  hover:bg-gray-100  gap-3"
                                 data-accordion-target="#accordion-collapse-body-2" aria-expanded="true"
                                 aria-controls="accordion-collapse-body-1">
-                                <span>10:00 WIB - 15:00 WIB</span>
+                                <span class="font-bold">10:00 WIB - 15:00 WIB</span>
                                 <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -234,7 +369,7 @@
                                                         <div class="flex gap-2">
                                                             <div class="w-2/5">
                                                                 <select id="iklan" name="iklan[]"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                     <option selected disabled> Pilih Iklan </option>
                                                                     @foreach ($iklan as $item)
                                                                         <option value="{{ $item->id }}">
@@ -244,7 +379,7 @@
                                                             </div>
                                                             <div class="w-2/5">
                                                                 <select id="kuadran" name="kuadran[]"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                     <option selected disabled> Pilih Kuadran </option>
                                                                     <option value="#">1</option>
                                                                 </select>
@@ -275,7 +410,7 @@
                                                         <div class="flex gap-2">
                                                             <div class="w-2/5">
                                                                 <select id="iklan" name="iklan[]"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                     <option selected disabled> Pilih Iklan </option>
                                                                     @foreach ($iklan as $item)
                                                                         <option value="{{ $item->id }}">
@@ -285,7 +420,7 @@
                                                             </div>
                                                             <div class="w-2/5">
                                                                 <select id="kuadran" name="kuadran[]"
-                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                                                                     <option selected disabled> Pilih Kuadran </option>
                                                                     <option value="#">1</option>
                                                                 </select>
@@ -315,7 +450,7 @@
                 </div>
                 <div class="flex justify-end mt-2">
                     <button type="submit" id="btn-submit"
-                        class="hover:bg-green-200 transition-all transition-duration-300 text-green-500 font-bold py-1 px-3 rounded-md"><i
+                        class="hover:bg-green-200 transition-all transition-duration-300 text-green-600 font-bold py-2 px-4 rounded-full"><i
                             class="fa-solid fa-floppy-disk"></i><span class="ml-1 font-bold">Simpan</span>
                     </button>
                 </div>
@@ -348,7 +483,7 @@
             const selectIklan = document.createElement('select');
             selectIklan.name = `data[${index}][iklan][]`;
             selectIklan.className =
-                "bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
+                "bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
 
             selectIklan.innerHTML = `<option selected disabled>Pilih Iklan</option>`;
 
@@ -376,7 +511,7 @@
             const selectKuadran = document.createElement('select');
             selectKuadran.name = `data[${index}][kuadran][]`;
             selectKuadran.className =
-                "bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
+                "bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
 
             selectKuadran.innerHTML = `
         <option selected disabled>Pilih Kuadran</option>
@@ -455,6 +590,63 @@
                     }
                 });
         });
+
+        function tambahMemo(button) {
+            const container = document.getElementById('memo-container');
+            const flexDiv = button.closest('.flex');
+            const newFlex = flexDiv.cloneNode(true);
+
+            // Bersihkan nilai input baru
+            newFlex.querySelector('input').value = '';
+
+            // Ubah tombol tambah menjadi tombol hapus
+            const newButton = newFlex.querySelector('button');
+            newButton.innerHTML =
+                `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="size-6" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z" clip-rule="evenodd" />
+        </svg>`;
+            newButton.className =
+                'hover:shadow-lg hover:bg-red-200 transition-all transition-duration-300 text-red-500 font-bold py-1 px-3 rounded-md';
+            newButton.onclick = function() {
+                hapusMemo(newButton);
+            };
+
+            container.appendChild(newFlex);
+        }
+
+        function hapusMemo(button) {
+            const flexDiv = button.closest('.flex');
+            flexDiv.remove();
+        }
+
+        // tambah menu action
+        function tambahMenuAction(button) {
+            const container = document.getElementById('menu-action-container');
+            const flexDiv = button.closest('.flex');
+            const newFlex = flexDiv.cloneNode(true);
+
+            // Bersihkan nilai input baru
+            newFlex.querySelector('input').value = '';
+
+            // Ubah tombol tambah menjadi tombol hapus
+            const newButton = newFlex.querySelector('button');
+            newButton.innerHTML =
+                `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="size-6" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z" clip-rule="evenodd" />
+        </svg>`;
+            newButton.className =
+                'hover:shadow-lg hover:bg-red-200 transition-all transition-duration-300 text-red-500 font-bold py-1 px-3 rounded-md';
+            newButton.onclick = function() {
+                hapusMenuAction(newButton);
+            };
+
+            container.appendChild(newFlex);
+        }
+
+        function hapusMenuAction(button) {
+            const flexDiv = button.closest('.flex');
+            flexDiv.remove();
+        };
     </script>
 </x-sidebar-navbar-layout>
 
@@ -473,7 +665,7 @@
     const selectIklan = document.createElement('select');
     selectIklan.name = "id_iklan[]";
     selectIklan.className =
-        "bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
+        "bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
 
     selectIklan.innerHTML = `<option selected disabled>Pilih Iklan</option>`;
 
@@ -501,7 +693,7 @@
     const selectKuadran = document.createElement('select');
     selectKuadran.name = "kuadran[]";
     selectKuadran.className =
-        "bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
+        "bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 w-full p-2.5";
 
     selectKuadran.innerHTML = `
 <option selected disabled>Pilih Kuadran</option>

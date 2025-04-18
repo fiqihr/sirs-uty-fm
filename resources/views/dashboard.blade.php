@@ -4,7 +4,10 @@
         <p class="text-lg text-gray-500">Selamat Datang, {{ Auth::user()->name }}! 🖐️</p>
     </div>
     <div class="flex gap-4">
-        <div class="w-1/3 rounded-md bg-gradient-to-r p-4 from-purple-400 to-purple-300 shadow-md text-white">
+        <div class="w-1/3 rounded-md p-4
+        {{-- bg-gradient-to-r from-purple-400 to-purple-300  --}}
+        bg-grd1 
+        shadow-md text-white">
             <div class="flex gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                     <path fill-rule="evenodd"
@@ -17,7 +20,10 @@
             </div>
             <p class="text-4xl font-bold">{{ $jumlahClient }}</p>
         </div>
-        <div class="w-1/3 rounded-md bg-gradient-to-r p-4 from-yellow-400 to-yellow-300 shadow-md text-white">
+        <div class="w-1/3 rounded-md p-4 
+        {{-- bg-gradient-to-r  from-yellow-400 to-yellow-300 --}}
+        bg-grd2
+         shadow-md text-white">
             <div class="flex gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                     <path fill-rule="evenodd"
@@ -28,7 +34,10 @@
             </div>
             <p class="text-4xl font-bold">{{ $jumlahIklan }}</p>
         </div>
-        <div class="w-1/3 rounded-md bg-gradient-to-r p-4 from-red-400 to-red-300 shadow-md text-white">
+        <div class="w-1/3 rounded-md p-4 
+        {{-- bg-gradient-to-r from-red-400 to-red-300  --}}
+        bg-grd3
+        shadow-md text-white">
             <div class="flex gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                     <path fill-rule="evenodd"

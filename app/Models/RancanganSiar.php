@@ -36,4 +36,14 @@ class RancanganSiar extends Model
     {
         return $this->belongsTo(RentangJam::class, 'id_rentang_jam', 'id');
     }
+
+    public function memoPivot()
+    {
+        return $this->hasMany(PivotMemo::class, 'id_rs', 'id_rs');
+    }
+
+    public function menuActionPivot()
+    {
+        return $this->hasMany(PivotMenuAction::class, 'id_rs', 'id_rs');
+    }
 }
