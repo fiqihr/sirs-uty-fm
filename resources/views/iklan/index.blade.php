@@ -4,8 +4,7 @@
             <p class="font-bold text-4xl mb-4">Iklan</p>
             <p class="text-sm">Data Iklan</p>
         </div>
-        <button onclick="window.location='{{ route('iklan.create') }}'"
-            class="hover:bg-blue-100 transition-all transition-duration-300 text-blue-500 font-bold py-1 px-3 rounded-md"><i
+        <button onclick="window.location='{{ route('iklan.create') }}'" class="btn-tambah"><i
                 class="fa-solid fa-plus"></i><span class="ml-1 font-bold">Tambah Iklan</span>
         </button>
     </div>

@@ -10,13 +10,13 @@
             <div class="mb-5">
                 <label for="nama_program" class="block mb-2 text-sm font-medium text-gray-600 ">Nama Program</label>
                 <input type="text" id="nama_program" name="nama_program"
-                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
+                    class="input-form"
                     value="{{ $program->nama_program }}" required />
             </div>
             <div class="flex justify-end mt-2">
                 <button type="submit"
-                    class="hover:bg-green-200 transition-all transition-duration-300 text-green-500 font-bold py-1 px-3 rounded-md"><i
-                        class="fa-solid fa-floppy-disk"></i><span class="ml-1 font-bold">Simpan</span>
+                    class="btn-simpan"><i
+                        class="fa-solid fa-floppy-disk"></i><span class="ml-1 font-bold">Update</span>
                 </button>
             </div>
         </form>

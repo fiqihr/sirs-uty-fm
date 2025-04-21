@@ -52,7 +52,7 @@
             <ul class="space-y-2 font-medium">
                 <li>
                     <a href="{{ route('dashboard') }}"
-                        class="mb-4 text-sm flex text-red_1 opacity-70 opacity-70 hover:text-red_2 items-center p-2 rounded-lg hover:bg-rose-100 transition-all duration-200 group">
+                        class="mb-4 text-sm flex text-red_1  opacity-70 hover:text-red_2 items-center p-2 rounded-lg hover:bg-rose-100 transition-all duration-200 group">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                             <path fill-rule="evenodd"
                                 d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z"
@@ -90,6 +90,34 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('rancangan-siar.index') }}"
+                            class="mt-2 text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
+                            <!-- Heroicons: Document Text -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="size-6">
+                                <path
+                                    d="M21.721 12.752a9.711 9.711 0 0 0-.945-5.003 12.754 12.754 0 0 1-4.339 2.708 18.991 18.991 0 0 1-.214 4.772 17.165 17.165 0 0 0 5.498-2.477ZM14.634 15.55a17.324 17.324 0 0 0 .332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 0 0 .332 4.647 17.385 17.385 0 0 0 5.268 0ZM9.772 17.119a18.963 18.963 0 0 0 4.456 0A17.182 17.182 0 0 1 12 21.724a17.18 17.18 0 0 1-2.228-4.605ZM7.777 15.23a18.87 18.87 0 0 1-.214-4.774 12.753 12.753 0 0 1-4.34-2.708 9.711 9.711 0 0 0-.944 5.004 17.165 17.165 0 0 0 5.498 2.477ZM21.356 14.752a9.765 9.765 0 0 1-7.478 6.817 18.64 18.64 0 0 0 1.988-4.718 18.627 18.627 0 0 0 5.49-2.098ZM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 0 0 1.988 4.718 9.765 9.765 0 0 1-7.478-6.816ZM13.878 2.43a9.755 9.755 0 0 1 6.116 3.986 11.267 11.267 0 0 1-3.746 2.504 18.63 18.63 0 0 0-2.37-6.49ZM12 2.276a17.152 17.152 0 0 1 2.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0 1 12 2.276ZM10.122 2.43a18.629 18.629 0 0 0-2.37 6.49 11.266 11.266 0 0 1-3.746-2.504 9.754 9.754 0 0 1 6.116-3.985Z" />
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap">Rancangan Siar</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('buatLaporan') }}"
+                            class="mb-4 text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
+                            <!-- Heroicons: Document Text -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="size-6">
+                                <path fill-rule="evenodd"
+                                    d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap">Laporan</span>
+                        </a>
+                    </li>
+                    {{-- <li>
                         <a href="{{ route('traffic.index') }}"
                             class="text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -99,9 +127,9 @@
                             </svg>
                             <span class="flex-1 ms-3 whitespace-nowrap">Traffic</span>
                         </a>
-                    </li>
+                    </li> --}}
                 @endif
-                @if ($akses === 'admin' || $akses === 'penyiar' || $akses === 'traffic')
+                @if ($akses === 'admin' || $akses === 'penyiar')
                     <li>
                         <a href="{{ route('rancangan-siar.index') }}"
                             class="mt-2 text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
@@ -116,7 +144,7 @@
                     </li>
                 @endif
                 @if ($akses === 'admin' || $akses === 'program_director')
-                    <li>
+                    {{-- <li>
                         <a href="{{ route('penyiar.index') }}"
                             class="text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -128,7 +156,8 @@
                             </svg>
                             <span class="flex-1 ms-3 whitespace-nowrap">Penyiar</span>
                         </a>
-                    </li>
+                    </li> --}}
+
                     <li>
                         <a href="{{ route('program.index') }}"
                             class="mb-4 text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">

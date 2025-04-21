@@ -17,3 +17,13 @@ if (!function_exists('formatHari')) {
     return Carbon::parse($hari)->translatedFormat('l, j F Y');
   }
 }
+
+if (!function_exists('formatMenit')) {
+  function formatMenit($menit)
+  {
+    if (!$menit || strlen($menit) < 3) {
+      return '-';
+    }
+    return substr($menit, 0, -3); // Hapus 3 karakter terakhir
+  }
+}

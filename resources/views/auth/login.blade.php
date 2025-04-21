@@ -6,7 +6,7 @@
                     class="mb-2 text-6xl font-bold font-montserrat text-transparent bg-clip-text bg-gradient-to-r from-red_1 to-white">
                     SIRS
                 </p>
-                <p class="mb-5 text-red_2">Sistem Informasi Rancangan Siar UTY FM MEDARI</p>
+                <p class="mb-5 text-red_2 font-bold">Sistem Informasi Rancangan Siar UTY FM MEDARI</p>
                 <form class="mx-auto" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="mb-5">

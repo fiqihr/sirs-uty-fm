@@ -22,10 +22,13 @@ class CheckAccess
 
         $user = Auth::user();
 
+        // if (!in_array($user->hak_akses, $roles)) {
+        //     abort(403, 'Unauthorized');
+        // }
         if (!in_array($user->hak_akses, $roles)) {
-            abort(403, 'Unauthorized');
+            return redirect()->route('dashboard');
         }
-        
+
         return $next($request);
     }
 }

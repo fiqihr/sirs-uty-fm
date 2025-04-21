@@ -23,6 +23,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body class="font-inter antialiased">
@@ -48,6 +50,30 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <script>
+        setInterval(() => {
+            fetch('/cek-waktu')
+                .then(response => response.json())
+                .then(result => {
+                    if (result.status && result.data.length > 0) {
+                        result.data.forEach(item => {
+                            Swal.fire({
+                                title: 'Waktu Penayangan Dekat!',
+                                text: `Iklan ${item.iklan.nama_iklan} akan tayang pada jam ${item.menit_putar}`,
+                                icon: 'info',
+                                confirmButtonText: 'Oke',
+                                // timer: 5000
+                            });
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Terjadi kesalahan:', error);
+                });
+        }, 60000); // cek setiap 60 detik
+    </script>
+
+
 </body>
 
 </html>

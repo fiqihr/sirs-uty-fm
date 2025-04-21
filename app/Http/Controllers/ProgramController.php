@@ -22,12 +22,12 @@ class ProgramController extends Controller
 
                 ->addColumn('action', function ($row) {
 
-                    $editBtn = '<a href="' . route('program.edit', $row->id_program) . '" class="text-yellow-500 px-2 py-1 rounded-md transition-all transition-duration-300 hover:bg-yellow-100 hover:shadow-sm"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
+                    $editBtn = '<a href="' . route('program.edit', $row->id_program) . '" class="btn-edit"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
 
                     $deleteBtn = '<form id="delete-form-' . $row->id_program . '" action="' . route('program.destroy', $row->id_program) . '" method="POST" style="display:inline;">
                         ' . csrf_field() . '
                         ' . method_field('DELETE') . '
-                        <button type="button" onclick="deleteProgram(' . $row->id_program . ')" class="text-red-500 px-2 py-1 rounded-md transition-all duration-300 hover:bg-red-100 hover:shadow-sm">
+                        <button type="button" onclick="deleteProgram(' . $row->id_program . ')" class="btn-hapus">
                             <i class="fa-solid fa-trash"></i><span class="ml-1 font-bold text-xs">Hapus</span>
                         </button>
                     </form>';

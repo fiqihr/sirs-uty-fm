@@ -4,10 +4,15 @@
             <p class="font-bold text-4xl mb-4">Rancangan Siar</p>
             <p class="text-sm">Data Rancangan Siar</p>
         </div>
-        <button onclick="window.location='{{ route('rancangan-siar.create') }}'"
-            class="hover:bg-blue-100 transition-all transition-duration-300 text-blue-500 font-bold py-1 px-3 rounded-md"><i
-                class="fa-solid fa-plus"></i><span class="ml-1 font-bold">Tambah Rancangan Siar</span>
-        </button>
+        @php
+            $akses = Auth::user()->hak_akses;
+        @endphp
+        @if ($akses === 'admin' || $akses === 'traffic')
+            <button onclick="window.location='{{ route('rancangan-siar.create') }}'" class="btn-tambah"><i
+                    class="fa-solid fa-plus"></i><span class="ml-1 font-bold">Tambah Rancangan Siar</span>
+            </button>
+        @elseif($akses === 'admin' || $akses === 'penyiar')
+        @endif
     </div>
     <div class="p-3 bg-gray-50 rounded-md shadow-md">
         <table id="my-table"
@@ -27,5 +32,11 @@
         const rsIndexUrl = "{{ route('rancangan-siar.index') }}";
     </script>
     <script src="{{ asset('pages/rancangan_siar.js') }}"></script>
+    @if (session('rancangan_siar_berhasil'))
+        <script>
+            const rancanganSiarBerhasil = {!! json_encode(session('rancangan_siar_berhasil')) !!};
+            rancanganSiarBerhasil(rancanganSiarBerhasil);
+        </script>
+    @endif
 
 </x-sidebar-navbar-layout>

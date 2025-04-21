@@ -33,12 +33,12 @@ class IklanController extends Controller
                     return formatTanggal($row->periode_siar_mulai) . ' - ' . formatTanggal($row->periode_siar_selesai);
                 })
                 ->addColumn('action', function ($row) {
-                    $editBtn = '<a href="' . route('iklan.edit', $row->id_iklan) . '" class="text-yellow-500 px-2 py-1 rounded-md transition-all transition-duration-300 hover:bg-yellow-100 hover:shadow-sm"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
+                    $editBtn = '<a href="' . route('iklan.edit', $row->id_iklan) . '" class="btn-edit"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
 
                     $deleteBtn = '<form id="delete-form-' . $row->id_iklan . '" action="' . route('iklan.destroy', $row->id_iklan) . '" method="POST" style="display:inline;">
                     ' . csrf_field() . '
                     ' . method_field('DELETE') . '
-                    <button type="button" onclick="deleteIklan(' . $row->id_iklan . ')" class="text-red-500 px-2 py-1 rounded-md transition-all duration-300 hover:bg-red-100 hover:shadow-sm">
+                    <button type="button" onclick="deleteIklan(' . $row->id_iklan . ')" class="btn-hapus">
                         <i class="fa-solid fa-trash"></i><span class="ml-1 font-bold text-xs">Hapus</span>
                     </button>
                 </form>';
@@ -118,14 +118,16 @@ class IklanController extends Controller
             'id_client' => 'required',
             'nama_iklan' => 'required|string',
             'jumlah_putar' => 'required|integer',
-            'periode_siar' => 'required|integer',
+            'periode_siar_mulai' => 'required',
+            'periode_siar_selesai' => 'required',
         ]);
 
         $update = Iklan::where('id_iklan', $id)->update([
             'id_client' => $request->id_client,
             'nama_iklan' => $request->nama_iklan,
             'jumlah_putar' => $request->jumlah_putar,
-            'periode_siar' => $request->periode_siar,
+            'periode_siar_mulai' => $request->periode_siar_mulai,
+            'periode_siar_selesai' => $request->periode_siar_selesai,
             'updated_at' => now(),
         ]);
 
@@ -155,5 +157,14 @@ class IklanController extends Controller
     {
         $iklan = Iklan::all();
         return response()->json($iklan);
+    }
+
+    public function getIklanByClient($id_client)
+    {
+        $iklans = Iklan::where('id_client', $id_client)
+            ->select('id_iklan', 'nama_iklan', 'periode_siar_mulai', 'periode_siar_selesai')
+            ->get();
+
+        return response()->json($iklans);
     }
 }

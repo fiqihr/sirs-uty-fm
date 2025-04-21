@@ -18,8 +18,7 @@
             <div class="flex w-full my-5 gap-4">
                 <div class=" w-1/2">
                     <label for="penyiar" class="block mb-2 text-sm font-bold ">Nama Penyiar</label>
-                    <select id="penyiar" name="penyiar"
-                        class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-md focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                    <select id="penyiar" name="penyiar" class="input-form">
                         <option selected disabled> --- </option>
                         @foreach ($semuaPenyiar as $penyiar)
                             <option value="{{ $penyiar->id }}" @if (in_array($penyiar->id, $cekPenyiar)) selected @endif>
@@ -32,8 +31,7 @@
                 </div>
                 <div class="mb-5 w-1/2">
                     <label for="program" class="block mb-2 text-sm font-bold ">Nama Program</label>
-                    <select id="program" name="program"
-                        class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-md focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                    <select id="program" name="program" class="input-form">
                         <option selected disabled> --- </option>
                         @foreach ($semuaProgram as $program)
                             <option value="{{ $program->id_program }}"
@@ -63,14 +61,14 @@
                             <tr class="odd:bg-white even:bg-gray-50">
                                 <td class="px-6 py-4">{{ $item->jam }}</td>
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center justify-evenly">
-                                        <p>
+                                    <div class="flex items-center ">
+                                        <p class="w-1/3">
                                             Iklan: <span class="font-bold">{{ $item->iklan->nama_iklan }}</span>
                                         </p>
-                                        <p>
+                                        <p class="w-1/3">
                                             Kuadran: <span class="font-bold">{{ $item->kuadran }}</span>
                                         </p>
-                                        <div class="flex items-center gap-2">
+                                        <div class="flex items-center gap-2 w-1/3">
                                             <label for="menit_putar">Menit:</label>
                                             <input type="hidden" name="id_rancangan_siar[]"
                                                 value="{{ $item->id_rs }}">
@@ -171,14 +169,9 @@
                     </table>
                 </div>
             </div>
-
-            {{-- <div class="w-1-3">
-                    <label for="menu-action"></label>
-                </div> --}}
+            <hr class="my-8">
             <div class="flex justify-end mt-5">
-                <button type="submit" id="btn-submit"
-                    class=" transition-all transition-duration-300  font-bold py-1 px-3 rounded-md {{ $rancanganSiar->isEmpty() ? 'hover:bg-gray-200  cursor-not-allowed' : 'hover:bg-green-200 text-green-500' }}"
-                    {{ $rancanganSiar->isEmpty() ? 'disabled' : '' }}><i class="fa-solid fa-floppy-disk"></i><span
+                <button type="submit" id="btn-submit" class="btn-simpan"><i class="fa-solid fa-floppy-disk"></i><span
                         class="ml-1 font-bold">Simpan</span>
                 </button>
             </div>

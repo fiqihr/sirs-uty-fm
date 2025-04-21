@@ -11,6 +11,7 @@ use App\Http\Controllers\RancanganSiarController;
 use App\Models\Client;
 use App\Models\Iklan;
 use App\Models\Program;
+use App\Models\RancanganSiar;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -21,28 +22,49 @@ Route::get('/', function () {
     $jumlahClient = Client::count();
     $jumlahIklan = Iklan::count();
     $jumlahProgram = Program::count();
-    return view('dashboard', compact('jumlahClient', 'jumlahIklan', 'jumlahProgram'));
+    $jumlahRs = RancanganSiar::count();
+    return view('dashboard', compact('jumlahClient', 'jumlahIklan', 'jumlahProgram', 'jumlahRs'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/iklan/json', [IklanController::class, 'getIklanJson'])->name('iklan.json');
 
-Route::get('/rancangan-siar/{idTglRs}/{rentangAwal}-{rentangAkhir}', [RancanganSiarController::class, 'rentangJamRs'])->name('rentangJamRs');
 
 
-Route::resource('rancangan-siar', RancanganSiarController::class);
+
+
+
+
+// Route::resource('rancangan-siar', RancanganSiarController::class);
+
 Route::get('/cek-tanggal', [RancanganSiarController::class, 'cekTanggal'])->name('cek.tanggal');
 Route::put('/simpan-menit', [RancanganSiarController::class, 'simpanMenit'])->name('simpan.menit');
 
+
+Route::get('/get-iklan-by-client/{id_client}', [IklanController::class, 'getIklanByClient'])->name('get-iklan-by-client');
+
+Route::get('/cek-waktu', [RancanganSiarController::class, 'cekWaktu']);
 
 // Route::middleware(['auth', 'check.access:admin'])->group(function () {
 //     Route::resource('client', ClientController::class);
 //     Route::resource('program', ProgramController::class);
 // });
 
+
+
 Route::middleware(['auth', 'check.access:admin,traffic'])->group(function () {
     Route::resource('traffic', TrafficController::class);
     Route::resource('client', ClientController::class);
     Route::resource('iklan', IklanController::class);
+    Route::get('/rancangan-siar/create', [RancanganSiarController::class, 'create'])->name('rancangan-siar.create');
+    Route::post('/rancangan-siar', [RancanganSiarController::class, 'store'])->name('rancangan-siar.store');
+    // Route::post('/rancangan-siar', [RancanganSiarController::class, 'store'])->name('rancangan-siar.store');
+    Route::delete('/rancangan-siar/{id}', [RancanganSiarController::class, 'destroy'])->name('rancangan-siar.destroy');
+    Route::post('/rancangan-siar/tambah-tanggal', [RancanganSiarController::class, 'tambahTanggal'])->name('tambah.tanggal');
+    Route::get('/rancangan-siar/show-create/{id}', [RancanganSiarController::class, 'showCreate'])->name('rancangan-siar.show-create');
+    Route::get('/rancangan-siar/show-create/{idTglRs}/{rentangAwal}-{rentangAkhir}', [RancanganSiarController::class, 'rentangJamRsCreate'])->name('rentangJamRsCreate');
+    Route::get('/rancangan-siar/traffic/{idTglRs}/{rentangAwal}-{rentangAkhir}', [RancanganSiarController::class, 'rentangJamRsTraffic'])->name('rentangJamRsTraffic');
+    Route::get('/laporan', [RancanganSiarController::class, 'buatLaporan'])->name('buatLaporan');
+    Route::post('/laporan/cetak', [RancanganSiarController::class, 'cetakLaporan'])->name('cetakLaporan');
 
     // iklan json
 
@@ -57,14 +79,12 @@ Route::middleware(['auth', 'check.access:admin,traffic'])->group(function () {
 });
 
 Route::middleware(['auth', 'check.access:admin,penyiar'])->group(function () {
-    // rancangan siar
-    // Route::get('/rs', function () {
-    //     return view('rs.index');
-    // })->name('rs.index');
-    // Route::get('/rs/create', function () {
-    //     $iklan = Iklan::all();
-    //     return view('rs.create', compact('iklan'));
-    // })->name('rs.create');
+    Route::get('/rancangan-siar/{idTglRs}/{rentangAwal}-{rentangAkhir}', [RancanganSiarController::class, 'rentangJamRs'])->name('rentangJamRs');
+});
+
+Route::middleware(['auth', 'check.access:admin,penyiar,traffic'])->group(function () {
+    Route::get('/rancangan-siar', [RancanganSiarController::class, 'index'])->name('rancangan-siar.index');
+    Route::get('/rancangan-siar/{id}', [RancanganSiarController::class, 'show'])->name('rancangan-siar.show');
 });
 
 Route::middleware(['auth', 'check.access:admin,program_director'])->group(function () {

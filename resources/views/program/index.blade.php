@@ -5,7 +5,7 @@
             <p class="text-sm">Data Program</p>
         </div>
         <button onclick="window.location='{{ route('program.create') }}'"
-            class="hover:bg-blue-100 transition-all transition-duration-300 text-blue-500 font-bold py-1 px-3 rounded-md"><i
+            class="btn-tambah"><i
                 class="fa-solid fa-plus"></i><span class="ml-1 font-bold">Tambah Program</span>
         </button>
     </div>

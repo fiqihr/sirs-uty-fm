@@ -45,7 +45,7 @@ $(function () {
     });
 });
 
-function iklanBerhasil(message) {
+function rancanganSiarBerhasil(message) {
     if (message) {
         Swal.fire({
             position: "center",
@@ -57,7 +57,7 @@ function iklanBerhasil(message) {
     }
 }
 
-window.deleteIklan = function (id) {
+window.deleteRs = function (id) {
     Swal.fire({
         text: "Apakah kamu yakin?",
         icon: "warning",

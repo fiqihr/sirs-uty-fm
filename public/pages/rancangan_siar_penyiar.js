@@ -57,7 +57,7 @@ function iklanBerhasil(message) {
     }
 }
 
-window.deleteIklan = function (id) {
+window.deleteRs = function (id) {
     Swal.fire({
         text: "Apakah kamu yakin?",
         icon: "warning",
