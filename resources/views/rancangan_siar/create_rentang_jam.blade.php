@@ -14,7 +14,45 @@
             {{ $jamAwalAkhir }}
         </div>
         <hr class="my-8">
-        <p class="text-base italic font-bold mb-2 my-4">&raquo; Rentang Jam</p>
+        @if ($rancanganSiar->isNotEmpty())
+            <p class="text-base italic font-bold my-2">&raquo; Rentang Jam yang sudah ada</p>
+            <div class="relative overflow-x-auto shadow-md sm:rounded-md mb-8">
+                <table
+                    class="w-full text-sm text-left rtl:text-right text-gray-500 overflow-hidden shadow-md tablebord">
+                    <thead class="text-xs text-gray-600 uppercase bg-gray-100  ">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Jam
+                            </th>
+                            <th scope="col" class="text-center py-3">
+                                Iklan & Kuadran
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($rancanganSiar as $item)
+                            <tr class="odd:bg-white even:bg-gray-50">
+                                <td class="px-6 py-4">{{ $item->jam }}</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center ">
+                                        <p class="w-1/3">
+                                            Iklan: <span class="font-bold">{{ $item->iklan->nama_iklan }}</span>
+                                        </p>
+                                        <p class="w-1/3">
+                                            Kuadran: <span class="font-bold">{{ $item->kuadran }}</span>
+                                        </p>
+                                        <div class="flex items-center gap-2 w-1/3">
+                                            <p>Jam:menit :</p>
+                                            <p class="font-bold">{{ formatMenit($item->menit_putar) }} WIB</p>
+                                        </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+        <p class="text-base italic font-bold mb-2 my-4">&raquo; Input Rentang Jam</p>
         <form action="{{ route('rancangan-siar.store') }}" method="POST">
             <input type="hidden" value="{{ $tanggal->id_tgl_rs }}" name="tanggal">
             @csrf
@@ -251,9 +289,59 @@
                     @endif
                 </tbody>
             </table>
+            @php
+                $semuaMemo = collect();
+                foreach ($rancanganSiar as $rs) {
+                    foreach ($rs->memoPivot as $pivot) {
+                        if ($pivot->memo) {
+                            $semuaMemo->push([
+                                'id_memo' => $pivot->memo->id_memo,
+                                'memo' => $pivot->memo->memo,
+                                'status' => $pivot->memo->status,
+                            ]);
+                        }
+                    }
+                }
+                $semuaMenuAction = collect();
+                foreach ($rancanganSiar as $rs) {
+                    foreach ($rs->menuActionPivot as $pivot) {
+                        if ($pivot->menu_action) {
+                            $semuaMenuAction->push([
+                                'id_menu_action' => $pivot->menu_action->id_menu_action,
+                                'menu_action' => $pivot->menu_action->menu_action,
+                                'status' => $pivot->menu_action->status,
+                            ]);
+                        }
+                    }
+                }
+                // Filter duplikat berdasarkan id_memo
+                $uniqueMemo = $semuaMemo->unique('id_memo')->values();
+                $uniqueMenuAction = $semuaMenuAction->unique('id_menu_action')->values();
+            @endphp
             <div class="flex w-full gap-4 mt-12 mb-4">
                 <div class="w-1/2 rounded-md shadow-lg p-4 bg-gray-100" id="memo-container">
                     <label for="memo" class="block mb-2 text-gray-600 font-bold">Memo</label>
+                    @if ($uniqueMemo->isNotEmpty())
+                        <table class="w-full text-sm">
+                            @foreach ($uniqueMemo as $memo)
+                                <tr class="border-b border-gray-300">
+                                    <td class="py-2">
+                                        <span
+                                            class="font-medium {{ $memo['status'] === 'selesai' ? 'line-through text-gray-500' : '' }}">
+                                            - {{ $memo['memo'] }}
+                                        </span>
+
+                                    </td>
+                                    <td class="py-2 flex justify-end pr-4">
+                                        <input type="checkbox" name="status_memo[]" value="{{ $memo['id_memo'] }}"
+                                            {{ $memo['status'] === 'selesai' ? 'checked' : '' }}
+                                            class="w-4 h-4 text-emerald-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-gray-500 dark:focus:ring-gray-600"
+                                            disabled>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    @endif
                     <div class="flex gap-2 mb-2">
                         <input type="text" name="memo[]"
                             class="bg-gray-100 border-0 border-b border-gray-300 text-gray-600 text-sm focus:ring-0 focus:border-gray-500 block w-full px-2.5 py-2"
@@ -272,6 +360,27 @@
                 <div class="w-1/2 rounded-md shadow-lg p-4 bg-gray-100" id="menu-action-container">
                     <label for="menu_action" class="block mb-2 text-gray-600 font-bold">Menu
                         Action</label>
+                        @if ($uniqueMenuAction->isNotEmpty())
+                        <table class="w-full text-sm">
+                            @foreach ($uniqueMenuAction as $menu_action)
+                                <tr class="border-b border-gray-300">
+                                    <td class="py-2">
+                                        <span
+                                            class="font-medium {{ $menu_action['status'] === 'selesai' ? 'line-through text-gray-500' : '' }}">
+                                            - {{ $menu_action['menu_action'] }}
+                                        </span>
+
+                                    </td>
+                                    <td class="py-2 flex justify-end pr-4">
+                                        <input type="checkbox" name="status_menu_action[]" value="{{ $menu_action['id_menu_action'] }}"
+                                            {{ $menu_action['status'] === 'selesai' ? 'checked' : '' }}
+                                            class="w-4 h-4 text-emerald-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-gray-500 dark:focus:ring-gray-600"
+                                            disabled>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    @endif
                     <div class="flex gap-2 mb-2">
                         <input type="text" id="menu_action" name="menu_action[]"
                             class="bg-gray-100 border-0 border-b border-gray-300 text-gray-600 text-sm focus:ring-0 focus:border-gray-500 block w-full px-2.5 py-2"

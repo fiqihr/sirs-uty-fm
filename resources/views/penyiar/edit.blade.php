@@ -1,22 +1,25 @@
 <x-sidebar-navbar-layout>
     <div class="text-gray-600 mb-4 flex flex-col gap-2">
         <p class="font-bold text-4xl">Edit Penyiar</p>
-        <p class="text-sm">Edit Data Penyiar</p>
+        <p class="text-sm italic">Data Penyiar &rsaquo; Edit Data Penyiar</p>
     </div>
     <div class="container w-full px-4 py-8 bg-white rounded-md shadow-md">
-        <form action="{{ route('penyiar.update', $penyiar->id_penyiar) }}" method="POST" class="w-2/3 mx-auto">
+        <form action="{{ route('penyiar.update', $penyiar->id) }}" method="POST" class="w-2/3 mx-auto">
             @csrf
             @method('PUT')
             <div class="mb-5">
-                <label for="nama_penyiar" class="block mb-2 text-sm font-medium text-gray-600 ">Nama Penyiar</label>
-                <input type="text" id="nama_penyiar" name="nama_penyiar"
-                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
-                    value="{{ $penyiar->nama_penyiar }}" required />
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-600 ">Nama Penyiar</label>
+                <input type="text" id="name" name="name" class="input-form" value="{{ $penyiar->name }}"
+                    required />
             </div>
-            <div class="flex justify-end mt-2">
-                <button type="submit"
-                    class="hover:bg-green-200 transition-all transition-duration-300 text-green-500 font-bold py-1 px-3 rounded-md"><i
-                        class="fa-solid fa-floppy-disk"></i><span class="ml-1 font-bold">Simpan</span>
+            <div class="mb-5">
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-600 ">Email Penyiar</label>
+                <input type="email" id="email" name="email" class="input-form" value="{{ $penyiar->email }}"
+                    required />
+            </div>
+            <div class="flex justify-end mt-8">
+                <button type="submit" class="btn-simpan"><i class="fa-solid fa-floppy-disk"></i><span
+                        class="ml-1 font-bold">Simpan</span>
                 </button>
             </div>
         </form>

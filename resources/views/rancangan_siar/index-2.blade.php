@@ -1,8 +1,8 @@
 <x-sidebar-navbar-layout>
     <div class="text-gray-600 mb-6 flex justify-between items-end">
-        <div class="">
-            <p class="font-bold text-4xl mb-4">Rancangan Siar</p>
-            <p class="text-sm">Data Rancangan Siar</p>
+        <div class="flex flex-col gap-2">
+            <p class="font-bold text-4xl">Rancangan Siar</p>
+            <p class="text-sm italic">Data Rancangan Siar</p>
         </div>
         @php
             $akses = Auth::user()->hak_akses;

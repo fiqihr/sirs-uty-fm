@@ -144,7 +144,7 @@
                     </li>
                 @endif
                 @if ($akses === 'admin' || $akses === 'program_director')
-                    {{-- <li>
+                    <li>
                         <a href="{{ route('penyiar.index') }}"
                             class="text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -156,8 +156,7 @@
                             </svg>
                             <span class="flex-1 ms-3 whitespace-nowrap">Penyiar</span>
                         </a>
-                    </li> --}}
-
+                    </li>
                     <li>
                         <a href="{{ route('program.index') }}"
                             class="mb-4 text-sm flex items-center p-2 rounded-lg  hover:bg-rose-100 transition-all duration-200 group text-red_1 opacity-70 hover:text-red_2 ">

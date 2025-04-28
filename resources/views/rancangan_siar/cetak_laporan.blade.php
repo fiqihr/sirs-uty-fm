@@ -71,14 +71,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($rancanganSiar as $index => $rs)
+            @forelse ($rancanganSiar as $index => $rs)
                 <tr>
                     <td style="text-align: center">{{ $index + 1 }}</td>
-                    {{-- <td>{{ \Carbon\Carbon::parse($rs->tanggalRs->tanggal)->format('d-m-Y') }}</td> --}}
                     <td>{{ formatHari($rs->tanggal_rs->tanggal) }}</td>
                     <td>{{ formatMenit($rs->menit_putar) ?? '-' }}</td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="3" style="text-align: center">Tidak ada data pemutaran</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
     <p style="text-indent: 30px; margin-top: 20px">Dari bukti pemutaran di atas, dengan demikian pemutaran iklan atas

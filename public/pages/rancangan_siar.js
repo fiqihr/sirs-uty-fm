@@ -59,7 +59,8 @@ function rancanganSiarBerhasil(message) {
 
 window.deleteRs = function (id) {
     Swal.fire({
-        text: "Apakah kamu yakin?",
+        title: "Apakah kamu yakin?",
+        text: "Semua data rancangan siar pada tanggal ini akan dihapus.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3B82F6",

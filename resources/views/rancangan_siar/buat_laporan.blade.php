@@ -1,23 +1,21 @@
 <x-sidebar-navbar-layout>
-    <div class="text-gray-600 mb-4 flex flex-col gap-2">
+    <div class="text-gray-600 mb-8 flex flex-col gap-2">
         <p class="font-bold text-4xl">Laporan</p>
-        <p class="text-sm">Cetak Laporan Bukti Siar</p>
+        <p class="text-sm italic">Cetak Laporan Bukti Siar</p>
     </div>
     <div class="container w-full px-4 py-8 bg-white rounded-md shadow-md">
         <form action="{{ route('cetakLaporan') }}" method="POST" class="w-2/3 mx-auto">
             @csrf
             <div class="mb-5">
                 <label for="id_client" class="block mb-2 text-sm font-medium text-gray-600 ">Nama Client</label>
-                <select id="id_client" name="id_client"
-                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 mb-4">
+                <select id="id_client" name="id_client" class="input-form mb-4">
                     <option selected disabled> --- </option>
                     @foreach ($clients as $client)
                         <option value="{{ $client->id_client }}">{{ $client->nama_client }}</option>
                     @endforeach
                 </select>
                 <label for="id_iklan" class="block mb-2 text-sm font-medium text-gray-600 ">Nama Iklan</label>
-                <select id="id_iklan" name="id_iklan"
-                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                <select id="id_iklan" name="id_iklan" class="input-form ">
                     <option selected disabled> --- </option>
                 </select>
                 <div class="flex gap-2 mb-5 mt-4">
@@ -25,21 +23,21 @@
                         <label for="periode_siar_mulai" class="block mb-2 text-sm font-medium text-gray-600 ">Mulai
                             Periode
                             Siar</label>
-                        <input type="date" id="periode_siar_mulai" name="periode_siar_mulai"
-                            class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
+                        <input type="date" id="periode_siar_mulai" name="periode_siar_mulai" class="input-form"
                             required />
                     </div>
                     <div class="w-1/2">
                         <label for="periode_siar_selesai" class="block mb-2 text-sm font-medium text-gray-600 ">Selesai
                             Periode Siar</label>
-                        <input type="date" id="periode_siar_selesai" name="periode_siar_selesai"
-                            class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
+                        <input type="date" id="periode_siar_selesai" name="periode_siar_selesai" class="input-form"
                             required />
                     </div>
                 </div>
             </div>
-            <div class="flex justify-end mt-2">
-                <button type="submit" class="btn-simpan"><i class="fa-solid fa-print"></i><span
+            <div class="flex justify-center mt-8">
+                <button type="submit" class="mt-8 
+                        bg-yellow_1 bg-opacity-70
+                        hover:shadow-xl hover:bg-red_1 hover:bg-opacity-70 transition duration-300 text-gray-600 hover:text-white py-3 px-4 rounded-full block font-semibold"><i class="fa-solid fa-print"></i><span
                         class="ml-1 font-bold">Cetak Laporan</span>
                 </button>
             </div>

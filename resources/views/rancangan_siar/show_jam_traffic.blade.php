@@ -1,7 +1,18 @@
 <x-sidebar-navbar-layout>
-    <div class="text-gray-600 mb-8 flex flex-col gap-2">
-        <p class="font-bold text-4xl mb-2">Rentang Jam Rancangan Siar Traffic</p>
-        <p class="text-sm italic">Rancangan Siar &rsaquo; Detail &rsaquo; Rentang Jam Rancangan Siar</p>
+    <div class="flex justify-between">
+        <div class="text-gray-600 mb-8 flex flex-col gap-2">
+            <p class="font-bold text-4xl mb-2">Rentang Jam Rancangan Siar Traffic</p>
+            <p class="text-sm italic">Rancangan Siar &rsaquo; Detail &rsaquo; Rentang Jam Rancangan Siar</p>
+        </div>
+        {{-- <p>{{ $tanggal->id_tgl_rs }}</p>
+        <p>{{ $rentangAwal }}</p>
+        <p>{{ $rentangAkhir }}</p> --}}
+        <div class="flex items-center">
+            <button
+                onclick="window.location='{{ route('rentangJamRsCreate', ['idTglRs' => $tanggal->id_tgl_rs, 'rentangAwal' => $rentangAwal, 'rentangAkhir' => $rentangAkhir]) }}'"
+                class="btn-edit"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold">Edit Rancangan Siar</span>
+            </button>
+        </div>
     </div>
     <div class="container w-full p-8 bg-white rounded-md shadow-md text-gray-600">
         <div class="mb-4">

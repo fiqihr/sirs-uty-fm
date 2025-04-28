@@ -1,17 +1,15 @@
 <x-sidebar-navbar-layout>
     <div class="text-gray-600 mb-6 flex justify-between items-end">
-        <div class="">
-            <p class="font-bold text-4xl mb-4">Client</p>
-            <p class="text-sm">Data Client</p>
+        <div class="mb-4 flex flex-col gap-2">
+            <p class="font-bold text-4xl">Client</p>
+            <p class="text-sm italic">Data Client</p>
         </div>
-        <button onclick="window.location='{{ route('client.create') }}'"
-            class="btn-tambah"><i
+        <button onclick="window.location='{{ route('client.create') }}'" class="btn-tambah"><i
                 class="fa-solid fa-plus"></i><span class="ml-1 font-bold">Tambah Client</span>
         </button>
     </div>
     <div class="p-3 bg-gray-50 rounded-md shadow-md">
-        <table id="my-table"
-            class="rounded-md min-w-full bg-white border-gray-300 text-sm overflow-hidden shadow-sm">
+        <table id="my-table" class="rounded-md min-w-full bg-white border-gray-300 text-sm overflow-hidden shadow-sm">
             <thead class=" rounded-t-lg text-gray-200">
                 <tr>
                     <th>No</th>

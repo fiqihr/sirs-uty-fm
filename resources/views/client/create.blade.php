@@ -1,7 +1,7 @@
 <x-sidebar-navbar-layout>
-    <div class="text-gray-600 mb-4 flex flex-col gap-2">
+    <div class="text-gray-600 mb-8 flex flex-col gap-2">
         <p class="font-bold text-4xl">Tambah Client</p>
-        <p class="text-sm">Tambah Data Client</p>
+        <p class="text-sm italic">Data Client &rsaquo; Tambah Data Client</p>
     </div>
     <div class="container w-full px-4 py-8 bg-white rounded-md shadow-md">
         <form action="{{ route('client.store') }}" method="POST" class="w-2/3 mx-auto">

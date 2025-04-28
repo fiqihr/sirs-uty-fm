@@ -1,8 +1,8 @@
 <x-sidebar-navbar-layout>
-    <div class="text-gray-600 mb-6 flex justify-between items-end">
-        <div class="">
-            <p class="font-bold text-4xl mb-4">Iklan</p>
-            <p class="text-sm">Data Iklan</p>
+    <div class="text-gray-600 mb-8 flex justify-between items-end ">
+        <div class="flex flex-col gap-2">
+            <p class="font-bold text-4xl">Iklan</p>
+            <p class="text-sm italic">Data Iklan </p>
         </div>
         <button onclick="window.location='{{ route('iklan.create') }}'" class="btn-tambah"><i
                 class="fa-solid fa-plus"></i><span class="ml-1 font-bold">Tambah Iklan</span>

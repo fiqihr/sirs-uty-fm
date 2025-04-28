@@ -1,7 +1,7 @@
 <x-sidebar-navbar-layout>
     <div class="text-gray-600 mb-4 flex flex-col gap-2">
         <p class="font-bold text-4xl">Rentang Jam Rancangan Siar</p>
-        <p class="text-sm">Detail Rentang Jam Rancangan Siar</p>
+        <p class="text-sm italic">Detail Rentang Jam Rancangan Siar</p>
     </div>
     <div class="container w-full p-8 bg-white rounded-md shadow-md text-gray-600">
         <div class="mb-4">

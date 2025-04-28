@@ -11,15 +11,15 @@
             </div>
             <div class="flex gap-2 mb-8">
                 <div
-                    class="bg-gradient-to-r from-purple-400 to-purple-300 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
+                    class="bg-violet_1 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
                     <span>Program</span> <span>{{ $jumlahProgram }}</span>
                 </div>
                 <div
-                    class="bg-gradient-to-r from-purple-400 to-purple-300 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
+                    class="bg-violet_2 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
                     <span>Penyiar</span> <span>{{ $jumlahPenyiar }}</span>
                 </div>
                 <div
-                    class="bg-gradient-to-r from-purple-400 to-purple-300 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
+                    class="bg-orange_1 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
                     <span>Iklan</span> <span>{{ $iklan }}</span>
                 </div>
             </div>
@@ -72,29 +72,29 @@
                         'rentangAkhir' => 19,
                     ]);
                 } else {
-                    $url1 = '#'; 
-                    $url2 = '#'; 
-                    $url3 = '#'; 
-                    $url4 = '#'; 
+                    $url1 = '#';
+                    $url2 = '#';
+                    $url3 = '#';
+                    $url4 = '#';
                 }
             @endphp
             <div class="mt-4 grid w-full grid-cols-2 gap-4">
                 <a href="{{ $url1 }}"
-                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">
+                    class="text-center bg-red_1 opacity-70 hover:opacity-50 transition-all transition-duration-300 text-white font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">
                     06:00 WIB - 10:00 WIB
                 </a>
                 <a href="{{ $url2 }}"
-                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">10:00
+                    class="text-center bg-red_1 opacity-70 hover:opacity-50 transition-all transition-duration-300 text-white font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">10:00
                     WIB
                     - 15:00 WIB
                 </a>
                 <a href="{{ $url3 }}"
-                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">15:00
+                    class="text-center bg-red_1 opacity-70 hover:opacity-50 transition-all transition-duration-300 text-white font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">15:00
                     WIB
                     - 20:00 WIB
                 </a>
                 <a href="{{ $url4 }}"
-                    class="text-center bg-gray-50 hover:bg-gray-100 transition-all transition-duration-300 text-gray-600 font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">20:00
+                    class="text-center bg-red_1 opacity-70 hover:opacity-50 transition-all transition-duration-300 text-white font-bold py-4 px-3 rounded-md shadow-md hover:shadow-lg">20:00
                     WIB
                     - 01:00 WIB
                 </a>
@@ -110,7 +110,7 @@
                 <div class=" w-1/2">
                     <label for="penyiar" class="block mb-2 text-sm font-bold ">Nama Penyiar</label>
                     <select id="penyiar" name="penyiar"
-                        class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                        class="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                         <option selected disabled> --- </option>
                         @foreach ($penyiars as $penyiar)
                             <option value="{{ $penyiar->id }}">{{ $penyiar->name }}</option>
@@ -120,7 +120,7 @@
                 <div class="mb-5 w-1/2">
                     <label for="program" class="block mb-2 text-sm font-bold ">Nama Program</label>
                     <select id="program" name="program"
-                        class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
+                        class="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 ">
                         <option selected disabled> --- </option>
                         @foreach ($programs as $program)
                             <option value="{{ $program->id_program }}">{{ $program->nama_program }}</option>

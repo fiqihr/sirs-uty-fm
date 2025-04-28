@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Penyiar;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
 class PenyiarController extends Controller
@@ -25,12 +26,12 @@ class PenyiarController extends Controller
 
                 ->addColumn('action', function ($row) {
 
-                    $editBtn = '<a href="' . route('penyiar.edit', $row->id) . '" class="text-yellow-500 px-2 py-1 rounded-md transition-all transition-duration-300 hover:bg-yellow-100 hover:shadow-sm"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
+                    $editBtn = '<a href="' . route('penyiar.edit', $row->id) . '" class="btn-edit"><i class="fa-solid fa-pen-nib"></i><span class="ml-1 font-bold text-xs">Edit</span></a>';
 
                     $deleteBtn = '<form id="delete-form-' . $row->id . '" action="' . route('penyiar.destroy', $row->id) . '" method="POST" style="display:inline;">
                         ' . csrf_field() . '
                         ' . method_field('DELETE') . '
-                        <button type="button" onclick="deletePenyiar(' . $row->id . ')" class="text-red-500 px-2 py-1 rounded-md transition-all duration-300 hover:bg-red-100 hover:shadow-sm">
+                        <button type="button" onclick="deletePenyiar(' . $row->id . ')" class="btn-hapus">
                             <i class="fa-solid fa-trash"></i><span class="ml-1 font-bold text-xs">Hapus</span>
                         </button>
                     </form>';
@@ -57,13 +58,16 @@ class PenyiarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_penyiar' => 'required|string',
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
-        $simpan = Penyiar::create([
-            'nama_penyiar' => $request->nama_penyiar,
-            'created_at' => now(),
-            'updated_at' => now(),
+        $simpan = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'hak_akses' => 'penyiar',
         ]);
 
         if ($simpan) {
@@ -87,7 +91,7 @@ class PenyiarController extends Controller
      */
     public function edit(string $id)
     {
-        $penyiar = Penyiar::where('id_penyiar', $id)->first();
+        $penyiar = User::where('id', $id)->first();
         return view('penyiar.edit', compact('penyiar'));
     }
 
@@ -97,12 +101,13 @@ class PenyiarController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'nama_penyiar' => 'required|string',
+            'name' => 'required|string',
+            'email' => 'required|email',
         ]);
 
-        $update = Penyiar::where('id_penyiar', $id)->update([
-            'nama_penyiar' => $request->nama_penyiar,
-            'updated_at' => now(),
+        $update = User::where('id', $id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
         ]);
         if ($update) {
             session()->flash('penyiar_berhasil', 'Penyiar berhasil diupdate!');

@@ -28,6 +28,9 @@ export default {
                 grd1: "#FFAD60",
                 grd2: "#D74B76",
                 grd3: "#96CEB4",
+                violet_1: "#79155B",
+                violet_2: "#C23373",
+                orange_1: "#F6635C",
             },
         },
 

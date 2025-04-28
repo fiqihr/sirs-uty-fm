@@ -40,17 +40,17 @@ class DatabaseSeeder extends Seeder
             'hak_akses' => 'program_director',
         ]);
 
-        Client::factory()->create([
-            'nama_client' => 'Client 1',
-        ]);
+        // Client::factory()->create([
+        //     'nama_client' => 'Client 1',
+        // ]);
 
-        Iklan::factory()->create([
-            'id_client' => 1,
-            'nama_iklan' => 'Iklan 1',
-            'jumlah_putar' => 10,
-            'periode_siar_mulai' => '2024-04-12',
-            'periode_siar_selesai' => '2024-04-13',
-        ]);
+        // Iklan::factory()->create([
+        //     'id_client' => 1,
+        //     'nama_iklan' => 'Iklan 1',
+        //     'jumlah_putar' => 10,
+        //     'periode_siar_mulai' => '2024-04-12',
+        //     'periode_siar_selesai' => '2024-04-13',
+        // ]);
 
         RentangJam::factory()->createMany([
             ['rentang_jam' => '06:00 - 07:00'],

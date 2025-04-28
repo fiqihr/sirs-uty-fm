@@ -2,7 +2,7 @@
     <div class="text-gray-600 mb-6 flex justify-between items-end">
         <div class="">
             <p class="font-bold text-4xl mb-4">Program</p>
-            <p class="text-sm">Data Program</p>
+            <p class="text-sm italic">Data Program</p>
         </div>
         <button onclick="window.location='{{ route('program.create') }}'"
             class="btn-tambah"><i

@@ -13,6 +13,7 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
+        // meminta request menggunakan ajax untuk datatables
         if ($request->ajax()) {
             return DataTables::of(Client::query()->orderBy('id_client', 'desc'))
                 ->addIndexColumn()
@@ -32,14 +33,12 @@ class ClientController extends Controller
                             <i class="fa-solid fa-trash"></i><span class="ml-1 font-bold text-xs">Hapus</span>
                         </button>
                     </form>';
-
-
-
                     return $showBtn . $editBtn . $deleteBtn;
                 })
                 ->rawColumns(['action'])
                 ->toJson();
         }
+        // pergi ke halaman client index
         return view('client.index');
     }
 
@@ -48,6 +47,7 @@ class ClientController extends Controller
      */
     public function create()
     {
+        // pergi ke halaman client create
         return view('client.create');
     }
 
@@ -56,16 +56,19 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+        // validasi data yang dimasukkan
         $request->validate([
             'nama_client' => 'required|string',
         ]);
 
+        // tambahkan data ke database
         $simpan = Client::create([
             'nama_client' => $request->nama_client,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
+        // jika berhasil simpan, maka redirect ke halaman index
         if ($simpan) {
             session()->flash('client_berhasil', 'Client berhasil ditambahkan!');
             return redirect()->route('client.index');
@@ -79,7 +82,10 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
+        // query menampilkan detail client
         $client = Client::with('iklan')->where('id_client', $id)->first();
+
+        // jika ada, maka tampilkan client show
         if ($client) {
             return view('client.show', compact('client'));
         } else {
@@ -92,7 +98,9 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
+        // query menampilkan data client yang akan diedit
         $client = Client::where('id_client', $id)->first();
+        // lalu tampilkan halaman client edit dgn membawa hasil query
         return view('client.edit', compact('client'));
     }
 
@@ -101,14 +109,18 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // validasi data yang dimasukkan
         $request->validate([
             'nama_client' => 'required|string',
         ]);
 
+        // update data client
         $update = Client::where('id_client', $id)->update([
             'nama_client' => $request->nama_client,
             'updated_at' => now(),
         ]);
+
+        // jika berhasil update, maka redirect ke halaman index
         if ($update) {
             session()->flash('client_berhasil', 'Client berhasil diupdate!');
             return redirect()->route('client.index');
@@ -122,7 +134,10 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
+        // hapus data client
         $hapus = Client::where('id_client', $id)->delete();
+
+        // jika berhasil hapus, maka redirect ke halaman index
         if ($hapus) {
             session()->flash('client_berhasil', 'Client berhasil dihapus!');
             return redirect()->route('client.index');

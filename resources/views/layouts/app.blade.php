@@ -59,7 +59,7 @@
                         result.data.forEach(item => {
                             Swal.fire({
                                 title: 'Waktu Penayangan Dekat!',
-                                text: `Iklan ${item.iklan.nama_iklan} akan tayang pada jam ${item.menit_putar}`,
+                                text: `Iklan ${item.iklan.nama_iklan} akan tayang pada jam ${item.formatted_waktu}`,
                                 icon: 'info',
                                 confirmButtonText: 'Oke',
                                 // timer: 5000
