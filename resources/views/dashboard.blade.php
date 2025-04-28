@@ -31,6 +31,28 @@
                 </div>
                 <p class="text-4xl font-bold">{{ $jumlahProgram }}</p>
             </div>
+        @elseif ($akses === 'penyiar')
+            @include('partials.cdn')
+            <div class="mb-8 w-full bg-white rounded-lg shadow-md py-16">
+                <p class="font-bold text-xl text-gray-600 mb-4 text-center">Silahkan Pilih Tanggal untuk Melihat
+                    Rancangan Siar</p>
+                </p>
+                <form id="searchForm" method="GET" class=" flex gap-4 w-2/3  mx-auto">
+                    <div class="w-full">
+                        <select id="selectTanggal" class="select2" name="id_tanggal" style="width: 100%;">
+                            <!-- Options will be dynamically loaded via AJAX -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-search flex gap-1 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                        <span>Cari</span>
+                    </button>
+                </form>
+            </div>
         @else
             <div class="w-1/3 rounded-md p-4 bg-grd1 shadow-md text-white">
                 <div class="flex gap-2">
@@ -81,6 +103,67 @@
             </div>
         @endif
     </div>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                ajax: {
+                    url: "{{ route('get.tanggal.json') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    }
+                },
+                placeholder: 'Pilih tanggal...',
+                minimumInputLength: 1,
+                minimumInputLength: 1,
+                language: {
+                    inputTooShort: function(args) {
+                        return "Silakan ketik minimal 3 karakter untuk mencari tanggal"; // ✅ Custom teks di sini
+                    },
+                    noResults: function() {
+                        return "Tidak ada tanggal ditemukan";
+                    },
+                    searching: function() {
+                        return "Mencari tanggal...";
+                    }
+                },
+                templateResult: formatOption,
+                templateSelection: formatOptionSelected
+            });
+
+            function formatOption(data) {
+                if (!data.id) {
+                    return data.text;
+                }
+                var $result = $('<div class="flex flex-col">' +
+                    '<span class="font-bold">' + data.text + '</span>' +
+                    '</div>');
+                return $result;
+            }
+
+            function formatOptionSelected(data) {
+                return data.text || data.id;
+            }
+
+
+            $('#searchForm').on('submit', function(e) {
+                e.preventDefault(); // Cegah submit default
+                let id = $('#selectTanggal').val(); // Ambil ID yang dipilih
+                if (id) {
+                    let actionUrl = "{{ route('rancangan-siar.show', ['id' => 'ID_REPLACE']) }}";
+                    actionUrl = actionUrl.replace('ID_REPLACE',
+                        id); // Ganti placeholder dengan id sebenarnya
+                    $(this).attr('action', actionUrl); // Ubah action form
+                    this.submit(); // Submit lagi
+                } else {
+                    alert('Silakan pilih tanggal dulu.');
+                }
+            });
+        });
+    </script>
     {{-- <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg ">
         <div class="grid grid-cols-3 gap-4 mb-4">
             <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50 ">

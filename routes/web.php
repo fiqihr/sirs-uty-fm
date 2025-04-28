@@ -28,6 +28,12 @@ Route::get('/', function () {
     return view('dashboard', compact('jumlahClient', 'jumlahIklan', 'jumlahProgram', 'jumlahRs', 'jumlahPenyiar'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/dashboard/penyiar', function () {
+    return view('dashboard_penyiar');
+})->middleware(['auth', 'verified'])->name('dashboard.penyiar');
+
+Route::get('/get-tanggal-json', [RancanganSiarController::class, 'getTanggalJson'])->name('get.tanggal.json');
+
 Route::get('/iklan/json', [IklanController::class, 'getIklanJson'])->name('iklan.json');
 Route::get('/cek-tanggal', [RancanganSiarController::class, 'cekTanggal'])->name('cek.tanggal');
 Route::put('/simpan-menit', [RancanganSiarController::class, 'simpanMenit'])->name('simpan.menit');

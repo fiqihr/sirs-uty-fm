@@ -50,6 +50,7 @@
                 $akses = Auth::user()->hak_akses;
             @endphp
             <ul class="space-y-2 font-medium">
+
                 <li>
                     <a href="{{ route('dashboard') }}"
                         class="mb-4 text-sm flex text-red_1  opacity-70 hover:text-red_2 items-center p-2 rounded-lg hover:bg-rose-100 transition-all duration-200 group">

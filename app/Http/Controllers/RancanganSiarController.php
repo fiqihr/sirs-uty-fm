@@ -22,6 +22,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class RancanganSiarController extends Controller
 {
@@ -493,5 +494,43 @@ class RancanganSiarController extends Controller
             'status' => true,
             'data' => $data,
         ]);
+    }
+    // Tambahkan ini di atas Controller kalau perlu
+
+    public function getTanggalJson(Request $request)
+    {
+        $term = $request->get('q'); // Keyword pencarian
+
+        // Default ambil maksimal 20 data saja
+        $query = TanggalRs::query();
+
+        if ($term) {
+            // Kalau inputan user angka tahun, contoh "2025"
+            if (is_numeric($term) && strlen($term) == 4) {
+                $query->whereYear('tanggal', $term);
+            }
+            // Kalau inputan user angka bulan, contoh "04" atau "4"
+            elseif (is_numeric($term) && (strlen($term) == 1 || strlen($term) == 2) && (int)$term <= 12) {
+                $query->whereMonth('tanggal', (int)$term);
+            }
+            // Kalau inputan huruf (April, Kamis, dst), tetap ambil semua dulu, filter manual
+        }
+
+        $results = $query->orderBy('tanggal', 'asc')->take(50)->get(); // Take 50 hasil saja
+
+        $formattedResults = [];
+
+        foreach ($results as $result) {
+            $formattedText = formatHari($result->tanggal);
+
+            if (!$term || Str::contains(Str::lower($formattedText), Str::lower($term))) {
+                $formattedResults[] = [
+                    'id' => $result->id_tgl_rs,
+                    'text' => $formattedText,
+                ];
+            }
+        }
+
+        return response()->json($formattedResults);
     }
 }
