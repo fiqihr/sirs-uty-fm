@@ -103,7 +103,117 @@
             </div>
         @endif
     </div>
+    <hr class="my-8">
+    @if ($akses === 'traffic')
+        <div class="text-gray-600">
+            <p class="text-2xl font-bold mb-4">Data Diagram </p>
+            <div class="max-w-4xl w-full bg-white rounded-lg shadow-sm  p-4 md:p-6">
+                <div class="flex justify-between pb-4 mb-4 border-b border-gray-200">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-lg bg-gray-200  flex items-center justify-center me-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="size-6">
+                                <path fill-rule="evenodd"
+                                    d="M5.636 4.575a.75.75 0 0 1 0 1.061 9 9 0 0 0 0 12.728.75.75 0 1 1-1.06 1.06c-4.101-4.1-4.101-10.748 0-14.849a.75.75 0 0 1 1.06 0Zm12.728 0a.75.75 0 0 1 1.06 0c4.101 4.1 4.101 10.75 0 14.85a.75.75 0 1 1-1.06-1.061 9 9 0 0 0 0-12.728.75.75 0 0 1 0-1.06ZM7.757 6.697a.75.75 0 0 1 0 1.06 6 6 0 0 0 0 8.486.75.75 0 0 1-1.06 1.06 7.5 7.5 0 0 1 0-10.606.75.75 0 0 1 1.06 0Zm8.486 0a.75.75 0 0 1 1.06 0 7.5 7.5 0 0 1 0 10.606.75.75 0 0 1-1.06-1.06 6 6 0 0 0 0-8.486.75.75 0 0 1 0-1.06ZM9.879 8.818a.75.75 0 0 1 0 1.06 3 3 0 0 0 0 4.243.75.75 0 1 1-1.061 1.061 4.5 4.5 0 0 1 0-6.364.75.75 0 0 1 1.06 0Zm4.242 0a.75.75 0 0 1 1.061 0 4.5 4.5 0 0 1 0 6.364.75.75 0 0 1-1.06-1.06 3 3 0 0 0 0-4.243.75.75 0 0 1 0-1.061ZM10.875 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-normal text-gray-500 00">Grafik Data Iklan</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="leading-none text-2xl font-bold text-white pb-1 bg-grd1 py-1 px-2 rounded-lg">2025
+                        </h5>
+
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2">
+
+                </div>
+
+                <div id="column-chart"></div>
+                <div class="grid grid-cols-1 items-center border-gray-200 border-t  justify-between">
+                    <div class="flex justify-between items-center pt-5">
+                        <!-- Button -->
+
+                        <!-- Dropdown menu -->
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    @endif
     <script>
+        const chartData = @json($chartData);
+
+        const options = {
+            colors: ["#a70808"],
+            series: [{
+                name: "Jumlah Iklan",
+                color: "#D74B76",
+                data: chartData // ini langsung dari Blade
+            }],
+            chart: {
+                type: "bar",
+                height: "320px",
+                fontFamily: "Inter, sans-serif",
+                toolbar: {
+                    show: false
+                }
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: "70%",
+                    borderRadiusApplication: "end",
+                    borderRadius: 8,
+                    distributed: true
+                },
+            },
+            xaxis: {
+                labels: {
+                    style: {
+                        fontFamily: "Inter, sans-serif",
+                        cssClass: 'text-xs font-normal fill-gray-500 00'
+                    }
+                },
+            },
+            yaxis: {
+                show: false,
+            },
+            grid: {
+                show: false
+            },
+            tooltip: {
+                shared: true,
+                intersect: false
+            },
+            fill: {
+                opacity: 1
+            },
+            legend: {
+                show: false
+            },
+            dataLabels: {
+                enabled: false
+            },
+        };
+
+        if (document.getElementById("column-chart") && typeof ApexCharts !== 'undefined') {
+            console.log(chartData)
+            const chart = new ApexCharts(document.getElementById("column-chart"), options);
+            chart.render();
+        }
+
+
+
+
+
+
         $(document).ready(function() {
             $('.select2').select2({
                 ajax: {

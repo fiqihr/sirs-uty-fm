@@ -20,6 +20,7 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
@@ -532,5 +533,58 @@ class RancanganSiarController extends Controller
         }
 
         return response()->json($formattedResults);
+    }
+
+    public function buatLaporanInternal()
+    {
+        $bulan = TanggalRs::all()->map(function ($item) {
+            return [
+                'bulanRaw' => \Carbon\Carbon::parse($item->tanggal)->format('Y-m'),
+                'bulan' => formatBulan($item->tanggal), // Gunakan translatedFormat
+            ];
+        })->unique('bulan')->values();
+
+        // dd($bulan);
+
+        return view('rancangan_siar.buat_laporan_internal', compact('bulan'));
+    }
+
+    public function cetakLaporanInternal(Request $request)
+    {
+        $bulanDipilih = $request->tanggal;
+
+        // Ambil semua id_tgl_rs yang tanggal-nya sesuai dengan bulan dan tahun tersebut
+        $idTanggal = TanggalRs::where('tanggal', 'like', $bulanDipilih . '%')
+            ->pluck('id_tgl_rs');
+
+        // Ambil semua data rancangan_siar yang id_tgl_rs-nya sesuai
+        $dataRancangan = RancanganSiar::with('iklan.client')->whereIn('id_tgl_rs', $idTanggal)->get();
+
+        // Ambil nama iklan dan client secara berpasangan
+        $namaIklanClient = $dataRancangan->map(function ($item) {
+            return [
+                'nama_iklan' => optional($item->iklan)->nama_iklan,
+                'nama_client' => optional($item->iklan->client)->nama_client,
+            ];
+        })->unique(function ($item) {
+            return $item['nama_iklan'] . '|' . $item['nama_client'];
+        })->values();
+
+        // Tampilkan untuk verifikasi
+        // dd([
+        //     'bulanDipilih' => $bulanDipilih,
+        //     'idTanggal' => $idTanggal,
+        //     'dataRancangan' => $dataRancangan,
+        //     'iklanClient' => $namaIklanClient,
+        // ]);
+
+        $pdf = Pdf::loadView('rancangan_siar.cetak_laporan_internal', [
+            'bulanDipilih' => formatBulan($bulanDipilih),
+            'idTanggal' => $idTanggal,
+            'dataRancangan' => $dataRancangan,
+            'iklanClient' => $namaIklanClient,
+        ])->setPaper('A4', 'portrait');
+
+        return $pdf->stream('Laporan-Rancangan-Siar-Internal.pdf');
     }
 }

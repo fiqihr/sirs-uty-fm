@@ -14,6 +14,8 @@ use App\Models\Program;
 use App\Models\RancanganSiar;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\App;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -25,7 +27,22 @@ Route::get('/', function () {
     $jumlahProgram = Program::count();
     $jumlahRs = RancanganSiar::count();
     $jumlahPenyiar = User::where('hak_akses', 'penyiar')->count();
-    return view('dashboard', compact('jumlahClient', 'jumlahIklan', 'jumlahProgram', 'jumlahRs', 'jumlahPenyiar'));
+    App::setLocale('id');
+    $dataChart = Iklan::selectRaw("DATE_FORMAT(periode_siar_mulai, '%Y-%m') as bulan, COUNT(*) as jumlah")
+        ->whereYear('periode_siar_mulai', 2025) // filter tahun jika perlu
+        ->groupBy('bulan')
+        ->pluck('jumlah', 'bulan'); // hasil: ['2025-04' => 5, '2025-05' => 1]
+
+    // Generate semua bulan di tahun 2025
+    $chartData = collect(CarbonPeriod::create('2025-01-01', '1 month', '2025-12-01'))
+        ->map(function ($date) use ($dataChart) {
+            $bulanKey = $date->format('Y-m');
+            return [
+                'x' => $date->translatedFormat('F'),
+                'y' => $dataChart[$bulanKey] ?? 0, // isi 0 kalau tidak ada data
+            ];
+        });
+    return view('dashboard', compact('jumlahClient', 'jumlahIklan', 'jumlahProgram', 'jumlahRs', 'jumlahPenyiar', 'chartData'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/dashboard/penyiar', function () {
@@ -54,6 +71,8 @@ Route::middleware(['auth', 'check.access:admin,traffic'])->group(function () {
     Route::get('/rancangan-siar/traffic/{idTglRs}/{rentangAwal}-{rentangAkhir}', [RancanganSiarController::class, 'rentangJamRsTraffic'])->name('rentangJamRsTraffic');
     Route::get('/laporan', [RancanganSiarController::class, 'buatLaporan'])->name('buatLaporan');
     Route::post('/laporan/cetak', [RancanganSiarController::class, 'cetakLaporan'])->name('cetakLaporan');
+    Route::get('/laporan-internal', [RancanganSiarController::class, 'buatLaporanInternal'])->name('buatLaporanInternal');
+    Route::post('/laporan-internal/cetak/', [RancanganSiarController::class, 'cetakLaporanInternal'])->name('cetakLaporanInternal');
 });
 
 Route::middleware(['auth', 'check.access:admin,penyiar'])->group(function () {

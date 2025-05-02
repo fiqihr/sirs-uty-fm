@@ -11,6 +11,14 @@ if (!function_exists('formatTanggal')) {
   }
 }
 
+if (!function_exists('formatBulan')) {
+  function formatBulan($bulan)
+  {
+    Carbon::setLocale('id');
+    return Carbon::parse($bulan)->translatedFormat('F Y');
+  }
+}
+
 if (!function_exists('formatHari')) {
   function formatHari($hari)
   {
