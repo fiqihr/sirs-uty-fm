@@ -9,23 +9,26 @@
                 <p class="text-sm">Tanggal</p>
                 <p class="font-bold text-2xl">{{ formatHari($tanggal->tanggal) }}</p>
             </div>
-            <div class="flex gap-2 mb-8">
-                <div
-                    class="bg-violet_1 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
-                    <span>Program</span> <span>{{ $jumlahProgram }}</span>
+            @if (!Auth::user()->hak_akses === 'penyiar')
+                <div class="flex gap-2 mb-8">
+                    <div
+                        class="bg-violet_1 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
+                        <span>Program</span> <span>{{ $jumlahProgram }}</span>
+                    </div>
+                    <div
+                        class="bg-violet_2 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
+                        <span>Penyiar</span> <span>{{ $jumlahPenyiar }}</span>
+                    </div>
+                    <div
+                        class="bg-orange_1 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
+                        <span>Iklan</span> <span>{{ $iklan }}</span>
+                    </div>
                 </div>
-                <div
-                    class="bg-violet_2 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
-                    <span>Penyiar</span> <span>{{ $jumlahPenyiar }}</span>
-                </div>
-                <div
-                    class="bg-orange_1 p-8 rounded-md shadow-md w-1/3 flex items-center justify-between text-lg font-bold italic text-white">
-                    <span>Iklan</span> <span>{{ $iklan }}</span>
-                </div>
-            </div>
+            @endif
             <hr>
             <p class="text-xl font-bold mb-2 mt-4">Rentang Jam</p>
-            <p>Silahkan pilih rentang jam untuk melihat iklan dan program pada hari {{ formatHari($tanggal->tanggal) }}
+            <p>Silahkan pilih rentang jam untuk melihat iklan dan program pada hari
+                {{ formatHari($tanggal->tanggal) }}
             </p>
             @php
                 $akses = Auth::user()->hak_akses;

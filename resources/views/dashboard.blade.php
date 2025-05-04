@@ -33,7 +33,31 @@
             </div>
         @elseif ($akses === 'penyiar')
             @include('partials.cdn')
-            <div class="mb-8 w-full bg-white rounded-lg shadow-md py-16">
+            <div class="mb-8 w-full bg-white rounded-lg shadow-md py-16 text-gray-600">
+                <p class="font-bold text-xl text-gray-600 mb-8 text-center">Silahkan Pilih Tanggal untuk Melihat
+                    Rancangan Siar</p>
+                <form id="searchForm" method="GET" class="flex gap-4 w-2/3 mx-auto">
+                    <div class="w-full">
+                        <input type="date" id="tanggal" name="tanggal"
+                            class="text-sm w-full border border-gray-300 rounded-full p-3 focus:outline-none focus:border-gray-500">
+                        <p id="peringatan-tanggal" class="text-center italic text-red-500 text-sm mt-1 hidden"></p>
+                    </div>
+                    <div class="">
+                        <button type="submit" id="btn-submit" class="btn-search flex gap-1 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="size-6">
+                                <path fill-rule="evenodd"
+                                    d="M16.5 3.75a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5h-6a1.5 1.5 0 0 1-1.5-1.5V15a.75.75 0 0 0-1.5 0v3.75a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5.25a3 3 0 0 0-3-3h-6a3 3 0 0 0-3 3V9A.75.75 0 1 0 9 9V5.25a1.5 1.5 0 0 1 1.5-1.5h6Zm-5.03 4.72a.75.75 0 0 0 0 1.06l1.72 1.72H2.25a.75.75 0 0 0 0 1.5h10.94l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 0 0-1.06 0Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span>Pilih</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+
+            {{-- <div class="mb-8 w-full bg-white rounded-lg shadow-md py-16">
                 <p class="font-bold text-xl text-gray-600 mb-4 text-center">Silahkan Pilih Tanggal untuk Melihat
                     Rancangan Siar</p>
                 </p>
@@ -52,7 +76,7 @@
                         <span>Cari</span>
                     </button>
                 </form>
-            </div>
+            </div> --}}
         @else
             <div class="w-1/3 rounded-md p-4 bg-grd1 shadow-md text-white">
                 <div class="flex gap-2">
@@ -209,70 +233,109 @@
             chart.render();
         }
 
+        const inputTanggal = document.getElementById('tanggal');
+        const warning = document.getElementById('peringatan-tanggal');
+        const btnSubmit = document.getElementById('btn-submit');
+        const form = document.getElementById('searchForm');
 
+        inputTanggal.addEventListener('change', function() {
+            const tanggal = this.value;
+            if (!tanggal) return;
 
+            fetch(`{{ route('get.tanggal.json') }}?q=${tanggal}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        // tanggal tidak ditemukan
+                        warning.textContent = "Tidak ada rancangan siar pada tanggal ini.";
+                        warning.classList.remove('hidden');
+                        inputTanggal.classList.remove('border-gray-300', 'focus:border-gray-500');
+                        inputTanggal.classList.add('border-red-500', 'focus:border-red-500');
+                        btnSubmit.disabled = true;
+                    } else {
+                        // tanggal tersedia
+                        warning.textContent = "";
+                        warning.classList.add('hidden');
+                        inputTanggal.classList.remove('border-red-500', 'focus:border-red-500');
+                        inputTanggal.classList.add('border-gray-300', 'focus:border-gray-500');
+                        btnSubmit.disabled = false;
 
-
-
-        $(document).ready(function() {
-            $('.select2').select2({
-                ajax: {
-                    url: "{{ route('get.tanggal.json') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: data
-                        };
+                        // ubah action form ke route show
+                        const tanggalId = data[0].id;
+                        let actionUrl = "{{ route('rancangan-siar.show', ['id' => 'ID_REPLACE']) }}";
+                        actionUrl = actionUrl.replace('ID_REPLACE', tanggalId);
+                        form.setAttribute('action', actionUrl);
                     }
-                },
-                placeholder: 'Pilih tanggal...',
-                minimumInputLength: 1,
-                minimumInputLength: 1,
-                language: {
-                    inputTooShort: function(args) {
-                        return "Silakan ketik minimal 3 karakter untuk mencari tanggal"; // ✅ Custom teks di sini
-                    },
-                    noResults: function() {
-                        return "Tidak ada tanggal ditemukan";
-                    },
-                    searching: function() {
-                        return "Mencari tanggal...";
-                    }
-                },
-                templateResult: formatOption,
-                templateSelection: formatOptionSelected
-            });
-
-            function formatOption(data) {
-                if (!data.id) {
-                    return data.text;
-                }
-                var $result = $('<div class="flex flex-col">' +
-                    '<span class="font-bold">' + data.text + '</span>' +
-                    '</div>');
-                return $result;
-            }
-
-            function formatOptionSelected(data) {
-                return data.text || data.id;
-            }
-
-
-            $('#searchForm').on('submit', function(e) {
-                e.preventDefault(); // Cegah submit default
-                let id = $('#selectTanggal').val(); // Ambil ID yang dipilih
-                if (id) {
-                    let actionUrl = "{{ route('rancangan-siar.show', ['id' => 'ID_REPLACE']) }}";
-                    actionUrl = actionUrl.replace('ID_REPLACE',
-                        id); // Ganti placeholder dengan id sebenarnya
-                    $(this).attr('action', actionUrl); // Ubah action form
-                    this.submit(); // Submit lagi
-                } else {
-                    alert('Silakan pilih tanggal dulu.');
-                }
-            });
+                });
         });
+
+        form.addEventListener('submit', function(e) {
+            if (!inputTanggal.value || btnSubmit.disabled) {
+                e.preventDefault();
+                alert("Silakan pilih tanggal yang valid.");
+            }
+        });
+
+
+        // $(document).ready(function() {
+        //     $('.select2').select2({
+        //         ajax: {
+        //             url: "{{ route('get.tanggal.json') }}",
+        //             dataType: 'json',
+        //             delay: 250,
+        //             processResults: function(data) {
+        //                 return {
+        //                     results: data
+        //                 };
+        //             }
+        //         },
+        //         placeholder: 'Pilih tanggal...',
+        //         minimumInputLength: 1,
+        //         minimumInputLength: 1,
+        //         language: {
+        //             inputTooShort: function(args) {
+        //                 return "Silakan ketik minimal 3 karakter untuk mencari tanggal"; // ✅ Custom teks di sini
+        //             },
+        //             noResults: function() {
+        //                 return "Tidak ada tanggal ditemukan";
+        //             },
+        //             searching: function() {
+        //                 return "Mencari tanggal...";
+        //             }
+        //         },
+        //         templateResult: formatOption,
+        //         templateSelection: formatOptionSelected
+        //     });
+
+        //     function formatOption(data) {
+        //         if (!data.id) {
+        //             return data.text;
+        //         }
+        //         var $result = $('<div class="flex flex-col">' +
+        //             '<span class="font-bold">' + data.text + '</span>' +
+        //             '</div>');
+        //         return $result;
+        //     }
+
+        //     function formatOptionSelected(data) {
+        //         return data.text || data.id;
+        //     }
+
+
+        //     $('#searchForm').on('submit', function(e) {
+        //         e.preventDefault(); // Cegah submit default
+        //         let id = $('#selectTanggal').val(); // Ambil ID yang dipilih
+        //         if (id) {
+        //             let actionUrl = "{{ route('rancangan-siar.show', ['id' => 'ID_REPLACE']) }}";
+        //             actionUrl = actionUrl.replace('ID_REPLACE',
+        //                 id); // Ganti placeholder dengan id sebenarnya
+        //             $(this).attr('action', actionUrl); // Ubah action form
+        //             this.submit(); // Submit lagi
+        //         } else {
+        //             alert('Silakan pilih tanggal dulu.');
+        //         }
+        //     });
+        // });
     </script>
     {{-- <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg ">
         <div class="grid grid-cols-3 gap-4 mb-4">
