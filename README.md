@@ -32,6 +32,7 @@ DB_DATABASE=sirs_uty_fm
 DB_USERNAME=root
 DB_PASSWORD=
 ```
+
 <hr>
 Lalu setelah itu, ketik perintah berikut satu-satu. <br>
 
@@ -41,6 +42,18 @@ npm run dev
 php artisan key:generate
 php artisan migrate
 php artisan db:seed
+```
+
+Setelah terinstall semua, ketikkan perintah berikut di 2 terminal berbeda.
+
+```
+php artisan serve
+```
+
+dan
+
+```
+npm run dev
 ```
 
 <hr>
@@ -77,7 +90,7 @@ misalnya ini
 Route::get('/rancangan-siar/create', [RancanganSiarController::class, 'create'])->name('rancangan-siar.create');
 ```
 
-Route tersebut menggunakan method `GET` untuk menuju ke alamat `url/rancangan-siar/create`. <br>
+Route tersebut menggunakan method `GET` untuk menuju ke alamat `http://url/rancangan-siar/create`. <br>
 Lalu menggunakan controller di `RancanganSiarController` yang nama kelasnya adalah `public function create()`. <br>
 Nama route ini adalah `rancangan-siar.create`.
 
