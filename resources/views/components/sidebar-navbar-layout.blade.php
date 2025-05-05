@@ -8,19 +8,27 @@
                 <!-- Teks Dashboard dengan animasi -->
                 <a href="{{ route('dashboard') }}" x-show="sidebarOpen" x-transition:enter="transition-opacity duration-500"
                     x-transition:leave="transition-opacity duration-500 opacity-0"
-                    class="text-lg font-semibold text-red_1 w-60 border-r">Citra <span
-                        class="text-yellow-500">TRAFFIC</span></a>
+                    class="text-lg font-semibold text-red_1 w-60 border-r">
+                    @if (Auth::user()->hak_akses === 'traffic')
+                        <span class="text-yellow-500">TRAFFIC</span>
+                    @elseif (Auth::user()->hak_akses === 'penyiar')
+                        <span class="text-yellow-500">PENYIAR</span>
+                    @elseif (Auth::user()->hak_akses === 'program_director')
+                        <span class="text-yellow-500">PROGRAM DIRECTOR</span>
+                    @else
+                        <span class="text-yellow-500">ADMIN</span>
+                    @endif
+                </a>
 
-                <!-- Tombol Toggle Sidebar dengan animasi -->
-                <button @click="sidebarOpen = !sidebarOpen"
-                    class="p-2 text-gray-600 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
-                    x-transition:enter="transition-transform duration-500 transform"
-                    x-transition:enter-start="translate-x-0" x-transition:enter-end="-translate-x-4"
-                    x-transition:leave="transition-transform duration-500 transform"
-                    x-transition:leave-start="-translate-x-4" x-transition:leave-end="translate-x-0">
-                    <svg x-show="!sidebarOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" d=" M4 6h16M4 12h16m-7 6h7">
+        <!-- Tombol Toggle Sidebar dengan animasi -->
+        <button @click="sidebarOpen = !sidebarOpen"
+            class="p-2 text-gray-600 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            x-transition:enter="transition-transform duration-500 transform" x-transition:enter-start="translate-x-0"
+            x-transition:enter-end="-translate-x-4" x-transition:leave="transition-transform duration-500 transform"
+            x-transition:leave-start="-translate-x-4" x-transition:leave-end="translate-x-0">
+            <svg x-show="!sidebarOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d=" M4 6h16M4 12h16m-7 6h7">
         </path>
         </svg>
         <svg x-show="sidebarOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
