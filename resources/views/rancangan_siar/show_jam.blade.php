@@ -21,11 +21,9 @@
                     <select id="penyiar" name="penyiar" class="input-form">
                         <option selected disabled> --- </option>
                         @foreach ($semuaPenyiar as $penyiar)
-                            <option value="{{ $penyiar->id }}" @if (in_array($penyiar->id, $cekPenyiar)) selected @endif>
+                            <option value="{{ $penyiar->id }}" @if (in_array($penyiar->id, $cekPenyiar) || (empty($cekPenyiar) && $penyiar->id == Auth::id())) selected @endif>
                                 {{ $penyiar->name }}
                             </option>
-
-                            {{-- <option value="{{ $penyiar->id }}">{{ $penyiar->name }}</option> --}}
                         @endforeach
                     </select>
                 </div>

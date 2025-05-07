@@ -16,8 +16,57 @@
         <hr class="my-8">
         @if ($rancanganSiar->isNotEmpty())
             <p class="text-base italic font-bold my-2">&raquo; Rentang Jam yang sudah ada</p>
-            <div class="relative overflow-x-auto shadow-md sm:rounded-md mb-8">
-                <table
+            <form action="{{ route('simpan.menit') }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="relative overflow-x-auto shadow-md sm:rounded-md mb-8">
+                    <table
+                        class="w-full text-sm text-left rtl:text-right text-gray-500 overflow-hidden shadow-md tablebord">
+                        <thead class="text-xs text-gray-600 uppercase bg-gray-100  ">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Jam
+                                </th>
+                                <th scope="col" class="text-center py-3">
+                                    Iklan & Kuadran
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($rancanganSiar as $item)
+                                <tr class="odd:bg-white even:bg-gray-50">
+                                    <td class="px-6 py-4">{{ $item->jam }}</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center ">
+                                            <p class="w-1/3">
+                                                Iklan: <span class="font-bold">{{ $item->iklan->nama_iklan }}</span>
+                                            </p>
+                                            <p class="w-1/3">
+                                                Kuadran: <span class="font-bold">{{ $item->kuadran }}</span>
+                                            </p>
+                                            <div class="flex items-center gap-2 w-1/3">
+                                                <label for="menit_putar">Menit:</label>
+                                                <input type="hidden" name="id_rancangan_siar[]"
+                                                    value="{{ $item->id_rs }}">
+                                                <input name="menit_putar[]" type="time"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-md focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 @if ($item->menit_putar == null)  @endif"
+                                                    value="{{ $item->menit_putar ?? null }}"
+                                                    oninput="validity.valid || (value = '')">
+                                            </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <hr class="my-8">
+                    <div class="flex justify-end mt-2 p-4">
+                        <button type="submit" id="btn-submit" class="btn-simpan"><i
+                                class="fa-solid fa-floppy-disk"></i><span class="ml-1 font-bold">Update Menit
+                                Pemutaran</span>
+                        </button>
+                    </div>
+                    {{-- yang lama --}}
+                    {{-- <table
                     class="w-full text-sm text-left rtl:text-right text-gray-500 overflow-hidden shadow-md tablebord">
                     <thead class="text-xs text-gray-600 uppercase bg-gray-100  ">
                         <tr>
@@ -49,8 +98,9 @@
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
-            </div>
+                </table> --}}
+                </div>
+            </form>
         @endif
         <p class="text-base italic font-bold mb-2 my-4">&raquo; Input Rentang Jam</p>
         <form action="{{ route('rancangan-siar.store') }}" method="POST">
@@ -360,7 +410,7 @@
                 <div class="w-1/2 rounded-md shadow-lg p-4 bg-gray-100" id="menu-action-container">
                     <label for="menu_action" class="block mb-2 text-gray-600 font-bold">Menu
                         Action</label>
-                        @if ($uniqueMenuAction->isNotEmpty())
+                    @if ($uniqueMenuAction->isNotEmpty())
                         <table class="w-full text-sm">
                             @foreach ($uniqueMenuAction as $menu_action)
                                 <tr class="border-b border-gray-300">
@@ -372,7 +422,8 @@
 
                                     </td>
                                     <td class="py-2 flex justify-end pr-4">
-                                        <input type="checkbox" name="status_menu_action[]" value="{{ $menu_action['id_menu_action'] }}"
+                                        <input type="checkbox" name="status_menu_action[]"
+                                            value="{{ $menu_action['id_menu_action'] }}"
                                             {{ $menu_action['status'] === 'selesai' ? 'checked' : '' }}
                                             class="w-4 h-4 text-emerald-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-gray-500 dark:focus:ring-gray-600"
                                             disabled>
@@ -404,6 +455,7 @@
                 </button>
             </div>
         </form>
+
     </div>
     <script>
         function tambahIklanKuadran(btn) {
