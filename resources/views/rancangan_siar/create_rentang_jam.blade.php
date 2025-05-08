@@ -16,7 +16,7 @@
         <hr class="my-8">
         @if ($rancanganSiar->isNotEmpty())
             <p class="text-base italic font-bold my-2">&raquo; Rentang Jam yang sudah ada</p>
-            <form action="{{ route('simpan.menit') }}" method="POST">
+            <form id="form-menit" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="relative overflow-x-auto shadow-md sm:rounded-md mb-8">
@@ -58,8 +58,8 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <hr class="my-8">
-                    <div class="flex justify-end mt-2 p-4">
+                    <hr class="mt-8">
+                    <div class="flex justify-end mt-4 p-4 mb-4">
                         <button type="submit" id="btn-submit" class="btn-simpan"><i
                                 class="fa-solid fa-floppy-disk"></i><span class="ml-1 font-bold">Update Menit
                                 Pemutaran</span>
@@ -458,6 +458,55 @@
 
     </div>
     <script>
+        document.getElementById('form-menit').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            const response = await fetch("{{ route('simpan.menit') }}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.message) {
+                sessionStorage.setItem('flashMessage', data.message);
+            }
+
+            if (data.refresh) {
+                window.location.reload();
+            } else if (data.redirect) {
+                window.location.href = data.redirect;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const message = sessionStorage.getItem('flashMessage');
+            if (message) {
+                updateMenitBerhasil(message);
+                sessionStorage.removeItem('flashMessage');
+            }
+
+            function updateMenitBerhasil(message) {
+                if (message) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        text: message,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            }
+        });
+
+
         function tambahIklanKuadran(btn) {
             const parentTd = btn.closest('td');
             const container = parentTd.querySelector('.iklan_kuadran');
@@ -567,7 +616,8 @@
                 .then(data => {
                     if (data.exists) {
                         // Tampilkan pesan peringatan
-                        warning.textContent = "Tanggal ini sudah digunakan. Silakan pilih tanggal lain.";
+                        warning.textContent =
+                            "Tanggal ini sudah digunakan. Silakan pilih tanggal lain.";
                         warning.classList.remove('hidden');
 
                         // Ubah border input menjadi merah

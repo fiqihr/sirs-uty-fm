@@ -359,8 +359,13 @@ class RancanganSiarController extends Controller
                 'menit_putar' => $menitPutarList[$index],
             ]);
         }
-        session()->flash('rancangan_siar_berhasil', 'Menit Putar berhasil ditambahkan!');
-        return redirect()->route('rancangan-siar.index')->with('success', 'Data berhasil diperbarui.');
+        $hakAkses = Auth::user()->hak_akses;
+        if ($hakAkses == 'traffic') {
+            return response()->json(['refresh' => true, 'message' => 'Menit pemutaran berhasil diupdate']);
+        } else {
+            session()->flash('rancangan_siar_berhasil', 'Menit Putar berhasil ditambahkan!');
+            return redirect()->route('rancangan-siar.index')->with('success', 'Data berhasil diperbarui.');
+        }
     }
 
 
