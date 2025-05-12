@@ -104,8 +104,10 @@ class RancanganSiarController extends Controller
      */
     public function store(Request $request)
     {
+        $existing_rs = $request->id_rs ?? []; // rancangan siar yg sudah ada
         $data_list = $request->data;
-        $all_rancangan_ids = []; // simpan semua id_rs untuk pivot memo nanti
+        $all_rancangan_ids = $existing_rs; // simpan semua id_rs untuk pivot memo nanti
+        // dd($all_rancangan_ids);
 
         // loop data rancangan siar
         foreach ($data_list as $baris) {
@@ -127,7 +129,7 @@ class RancanganSiarController extends Controller
                 $all_rancangan_ids[] = $simpan_rs->id_rs;
             }
         }
-
+        // dd($all_rancangan_ids);
         // simpan memo dan buat relasi ke rancangan_siar (pivot)
         foreach ($request->memo as $memoText) {
             $memo = Memo::create([
@@ -307,6 +309,8 @@ class RancanganSiarController extends Controller
 
     public function simpanMenit(Request $request)
     {
+        // return response()->json($request->all());
+        $hakAkses = Auth::user()->hak_akses;
         $statusMemo = $request->status_memo ?? [];
         $statusMenuAction = $request->status_menu_action ?? [];
 
@@ -350,19 +354,31 @@ class RancanganSiarController extends Controller
         // update Rancangan Siar
         $penyiar = $request->penyiar;
         $program = $request->program;
-        $menitPutarList = $request->menit_putar;
+        $menit_putar_list = $request->menit_putar;
+        $id_iklan_list = $request->id_iklan;
+        $kuadran_list = $request->kuadran;
 
-        foreach ($idRsList as $index => $idRancanganSiar) {
-            RancanganSiar::where('id_rs', $idRancanganSiar)->update([
-                'id_user' => $penyiar,
-                'id_program' => $program,
-                'menit_putar' => $menitPutarList[$index],
-            ]);
-        }
-        $hakAkses = Auth::user()->hak_akses;
         if ($hakAkses == 'traffic') {
-            return response()->json(['refresh' => true, 'message' => 'Menit pemutaran berhasil diupdate']);
+            // untuk traffic
+            foreach ($idRsList as $index => $idRancanganSiar) {
+                RancanganSiar::where('id_rs', $idRancanganSiar)->update([
+                    'id_user' => $penyiar,
+                    'id_program' => $program,
+                    'menit_putar' => $menit_putar_list[$index],
+                    'id_iklan' => $id_iklan_list[$index],
+                    'kuadran' => $kuadran_list[$index],
+                ]);
+            }
+            return response()->json(['refresh' => true, 'message' => 'Data berhasil diupdate']);
         } else {
+            // untuk penyiar
+            foreach ($idRsList as $index => $idRancanganSiar) {
+                RancanganSiar::where('id_rs', $idRancanganSiar)->update([
+                    'id_user' => $penyiar,
+                    'id_program' => $program,
+                    'menit_putar' => $menit_putar_list[$index],
+                ]);
+            }
             session()->flash('rancangan_siar_berhasil', 'Menit Putar berhasil ditambahkan!');
             return redirect()->route('rancangan-siar.index')->with('success', 'Data berhasil diperbarui.');
         }

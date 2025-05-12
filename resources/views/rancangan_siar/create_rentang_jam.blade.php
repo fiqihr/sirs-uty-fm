@@ -36,20 +36,47 @@
                             @foreach ($rancanganSiar as $item)
                                 <tr class="odd:bg-white even:bg-gray-50">
                                     <td class="px-6 py-4">{{ $item->jam }}</td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4 ">
                                         <div class="flex items-center ">
-                                            <p class="w-1/3">
-                                                Iklan: <span class="font-bold">{{ $item->iklan->nama_iklan }}</span>
-                                            </p>
-                                            <p class="w-1/3">
-                                                Kuadran: <span class="font-bold">{{ $item->kuadran }}</span>
-                                            </p>
+                                            <div class="w-1/3 flex justify-start items-center ">
+                                                <span class="mr-2">Iklan:</span>
+                                                <select id="id_iklan" name="id_iklan[]" class="input-form ">
+                                                    <option selected disabled> --- </option>
+                                                    @foreach ($iklan as $i)
+                                                        <option value="{{ $i->id_iklan }}"
+                                                            @if ($item->iklan->id_iklan == $i->id_iklan) selected @endif>
+                                                            {{ $i->nama_iklan }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            {{-- Iklan: <span class="font-bold">{{ $item->iklan->nama_iklan }}</span> --}}
+                                            <div class="w-1/3 flex justify-center items-center ">
+                                                <span class="mr-2">Kuadran: </span>
+                                                <select id="kuadran" name="kuadran[]"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-1/3 p-2.5">
+                                                    <option selected disabled> --- </option>
+                                                    <option value="1"
+                                                        @if ($item->kuadran == 1) selected @endif>
+                                                        1</option>
+                                                    <option value="2"
+                                                        @if ($item->kuadran == 2) selected @endif>
+                                                        2</option>
+                                                    <option value="3"
+                                                        @if ($item->kuadran == 3) selected @endif>
+                                                        3</option>
+                                                    <option value="4"
+                                                        @if ($item->kuadran == 4) selected @endif>
+                                                        4</option>
+                                                </select>
+                                            </div>
+                                            {{-- Kuadran: <span class="font-bold">{{ $item->kuadran }}</span> --}}
                                             <div class="flex items-center gap-2 w-1/3">
-                                                <label for="menit_putar">Menit:</label>
+                                                <label for="menit_putar">Menit: </label>
                                                 <input type="hidden" name="id_rancangan_siar[]"
                                                     value="{{ $item->id_rs }}">
                                                 <input name="menit_putar[]" type="time"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-md focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 @if ($item->menit_putar == null)  @endif"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-full focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 @if ($item->menit_putar == null)  @endif"
                                                     value="{{ $item->menit_putar ?? null }}"
                                                     oninput="validity.valid || (value = '')">
                                             </div>
@@ -105,6 +132,9 @@
         <p class="text-base italic font-bold mb-2 my-4">&raquo; Input Rentang Jam</p>
         <form action="{{ route('rancangan-siar.store') }}" method="POST">
             <input type="hidden" value="{{ $tanggal->id_tgl_rs }}" name="tanggal">
+            @foreach ($rancanganSiar as $item)
+                <input type="hidden" value="{{ $item->id_rs }}" name="id_rs[]">
+            @endforeach
             @csrf
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                 <thead class="text-xs text-gray-600 uppercase bg-gray-100  ">
