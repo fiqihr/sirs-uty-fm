@@ -12,6 +12,7 @@ use App\Models\Client;
 use App\Models\Iklan;
 use App\Models\Program;
 use App\Models\RancanganSiar;
+use App\Models\TanggalRs;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Carbon\CarbonPeriod;
@@ -25,7 +26,7 @@ Route::get('/', function () {
     $jumlahClient = Client::count();
     $jumlahIklan = Iklan::count();
     $jumlahProgram = Program::count();
-    $jumlahRs = RancanganSiar::count();
+    $jumlahRs = TanggalRs::count();
     $jumlahPenyiar = User::where('hak_akses', 'penyiar')->count();
     App::setLocale('id');
     $dataChart = Iklan::selectRaw("DATE_FORMAT(periode_siar_mulai, '%Y-%m') as bulan, COUNT(*) as jumlah")

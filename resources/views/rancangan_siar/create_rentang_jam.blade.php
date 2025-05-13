@@ -88,8 +88,8 @@
                     <hr class="mt-8">
                     <div class="flex justify-end mt-4 p-4 mb-4">
                         <button type="submit" id="btn-submit" class="btn-simpan"><i
-                                class="fa-solid fa-floppy-disk"></i><span class="ml-1 font-bold">Update Menit
-                                Pemutaran</span>
+                                class="fa-solid fa-floppy-disk"></i><span class="ml-1 font-bold">Update Rancangan
+                                Siar</span>
                         </button>
                     </div>
                     {{-- yang lama --}}

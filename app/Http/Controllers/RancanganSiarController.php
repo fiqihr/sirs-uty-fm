@@ -104,6 +104,9 @@ class RancanganSiarController extends Controller
      */
     public function store(Request $request)
     {
+        $id_tanggal = $request->tanggal;
+        // dd($id_tanggal);
+
         $existing_rs = $request->id_rs ?? []; // rancangan siar yg sudah ada
         $data_list = $request->data;
         $all_rancangan_ids = $existing_rs; // simpan semua id_rs untuk pivot memo nanti
@@ -161,7 +164,7 @@ class RancanganSiarController extends Controller
             }
         }
         session()->flash('rancangan_siar_berhasil', 'Rancangan Siar berhasil ditambahkan');
-        return redirect()->route('rancangan-siar.index');
+        return redirect()->route('rancangan-siar.show-create', $id_tanggal);
     }
 
     /**

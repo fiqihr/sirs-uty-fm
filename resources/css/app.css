@@ -86,6 +86,7 @@
 
 #my-table thead th {
     background-color: rgba(167, 8, 8, 0.5) !important;
+    color: #ffffff !important;
 }
 
 #my-table tbody tr:nth-child(even) {
@@ -177,5 +178,3 @@ button[data-accordion-target] {
     align-items: center;
     justify-content: center;
 }
-
-
