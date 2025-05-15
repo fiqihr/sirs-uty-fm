@@ -313,6 +313,7 @@ class RancanganSiarController extends Controller
     public function simpanMenit(Request $request)
     {
         // return response()->json($request->all());
+        $id_tanggal = $request->tanggal;
         $hakAkses = Auth::user()->hak_akses;
         $statusMemo = $request->status_memo ?? [];
         $statusMenuAction = $request->status_menu_action ?? [];
@@ -382,8 +383,8 @@ class RancanganSiarController extends Controller
                     'menit_putar' => $menit_putar_list[$index],
                 ]);
             }
-            session()->flash('rancangan_siar_berhasil', 'Menit Putar berhasil ditambahkan!');
-            return redirect()->route('rancangan-siar.index')->with('success', 'Data berhasil diperbarui.');
+            session()->flash('rancangan_siar_berhasil', 'Menit putar berhasil ditambahkan');
+            return redirect()->route('rancangan-siar.show', $id_tanggal);
         }
     }
 

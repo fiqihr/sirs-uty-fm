@@ -15,6 +15,7 @@
         <form action="{{ route('simpan.menit') }}" method="POST">
             @csrf
             @method('PUT')
+            <input type="hidden" value="{{ $tanggal->id_tgl_rs }}" name="tanggal">
             <div class="flex w-full my-5 gap-4">
                 <div class=" w-1/2">
                     <label for="penyiar" class="block mb-2 text-sm font-bold ">Nama Penyiar</label>
