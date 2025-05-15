@@ -462,7 +462,7 @@ class RancanganSiarController extends Controller
     public function cetakLaporan(Request $request)
     {
         $namaIklan = Iklan::where('id_iklan', $request->id_iklan)->first()->nama_iklan;
-        $namaClient = Iklan::where('id_iklan', $request->id_client)->first()->client->nama_client;
+        $namaClient = Iklan::where('id_client', $request->id_client)->first()->client->nama_client;
         $idIklan = Iklan::where('id_iklan', $request->id_iklan)->first()->id_iklan;
 
         $mulai = $request->periode_siar_mulai;

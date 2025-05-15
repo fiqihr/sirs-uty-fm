@@ -46,12 +46,12 @@
                 <td style="border: none;">{{ $namaIklan }}</td>
             </tr>
             <tr>
-                <td style="border: none; padding-left: 0px;" width="20%"><strong>Periode</strong></td>
+                <td style="border: none; padding-left: 0px;" width="20%"><strong>No Order</strong></td>
                 <td style="border: none;" width="2%">:</td>
                 <td style="border: none;">OD-{{ $idIklan }}</td>
             </tr>
             <tr>
-                <td style="border: none; padding-left: 0px;" width="20%"><strong>No Order</strong></td>
+                <td style="border: none; padding-left: 0px;" width="20%"><strong>Periode</strong></td>
                 <td style="border: none;" width="2%">:</td>
                 <td style="border: none;">{{ formatTanggal($mulai) }} s/d {{ formatTanggal($selesai) }}</td>
             </tr>
